@@ -9,16 +9,37 @@
 
 <body>
   <header class="header">
-    <div class="logo">フリマ</div>
+
+    <div class="logo">
+      <a href="{{ url('/') }}">
+        <img class="logo-img" src="{{ asset('images/Coachtech.jpg') }}" alt="フリマ">
+      </a>
+    </div>
+
     <form action="{{ route('products.index') }}" method="GET" class="search-box">
-      <input type="text" name="keyword" placeholder="商品を検索">
+      <input type="text" name="keyword" placeholder="なにをお探しですか ？">
       <button type="submit">検索</button>
     </form>
+
     <div class="nav-buttons">
-      <a href="#">ログイン</a>
+      @if(Auth::check())
+      {{-- ログイン済みならログアウトリンク --}}
+      <a href="{{ route('logout') }}"
+        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+        ログアウト
+      </a>
+      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        @csrf
+      </form>
+      @else
+      {{-- 未ログインならログインリンク --}}
+      <a href="{{ route('login') }}">ログイン</a>
+      @endif
+
       <a href="#">マイページ</a>
       <a href="{{ route('products.create') }}">出品</a>
     </div>
+
   </header>
 
   <main class="content">

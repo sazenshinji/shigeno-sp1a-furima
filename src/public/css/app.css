@@ -7,11 +7,15 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #eee;
+    background: #888;
     padding: 10px 20px;
 }
 .logo {
     font-weight: bold;
+}
+.logo-img {
+    height: 30px;
+    margin-top: 10px;
 }
 .search-box input {
     padding: 5px;
@@ -35,4 +39,33 @@ body {
 .product-card img {
     width: 100%;
     height: auto;
+}
+
+.auth-container {
+    width: 300px;
+    margin: 50px auto;
+    text-align: center;
+}
+.auth-container input, 
+.auth-container button {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 8px;
+}
+.profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.nav-buttons a {
+  margin-left: 10px;
+  text-decoration: none;
+  color: #333;
+}
+
+.nav-buttons a:hover {
+  text-decoration: underline;
 }
