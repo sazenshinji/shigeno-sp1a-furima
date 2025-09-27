@@ -17,7 +17,8 @@
     </div>
 
     <form action="{{ route('products.index') }}" method="GET" class="search-box">
-      <input type="text" name="keyword" placeholder="なにをお探しですか ？">
+      <input type="text" name="keyword" placeholder="なにをお探しですか？"
+        value="{{ request('keyword') }}">
       <button type="submit">検索</button>
     </form>
 

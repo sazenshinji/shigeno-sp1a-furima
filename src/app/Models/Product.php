@@ -13,6 +13,23 @@ class Product extends Model
         'name',
         'price',
         'image_path',
-        'description'
+        'is_my_like',
+        'is_sold',
+        'like_count',
+        'comment_count',
+        'bran',
+        'description',
+        'category_id',
+        'condition_id'
     ];
+    /**
+     * 商品名で部分一致検索
+     */
+    public function scopeSearch($query, $keyword)
+    {
+        if (!empty($keyword)) {
+            return $query->where('name', 'like', '%' . $keyword . '%');
+        }
+        return $query;
+    }
 }

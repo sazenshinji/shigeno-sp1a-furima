@@ -4,15 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
     // 商品一覧
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::latest()->get();
-        return view('products.index', compact('products'));
+        $keyword = $request->input('keyword');
+
+        $products = Product::search($keyword)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('products.index', compact('products', 'keyword'));
     }
 
     // 出品フォーム
