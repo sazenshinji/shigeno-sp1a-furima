@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -11,12 +12,29 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $keyword = $request->input('keyword');
+        $tab = $request->input('tab', 'recommend'); // デフォルトは「おすすめ」
 
-        $products = Product::search($keyword)
-            ->orderBy('created_at', 'desc')
-            ->get();
+        if ($tab === 'mylist' && Auth::check()) {
+            // ログイン中ユーザーのマイリスト
+            $query = Auth::user()->likedProducts();
+        } else {
+            // おすすめ（全商品）
+            $query = Product::query();
+        }
 
-        return view('products.index', compact('products', 'keyword'));
+        // 🔹 自分が出品した商品を除外する
+        if (Auth::check()) {
+            $query->where('seller_id', '!=', Auth::id());
+        }
+
+        // 🔹 検索条件がある場合
+        if (!empty($keyword)) {
+            $query->where('name', 'like', '%' . $keyword . '%');
+        }
+
+        $products = $query->with('transaction')->orderBy('created_at', 'desc')->get();
+
+        return view('products.index', compact('products', 'keyword', 'tab'));
     }
 
     // 出品フォーム
@@ -43,4 +61,13 @@ class ProductController extends Controller
 
         return redirect()->route('products.index')->with('success', '商品を登録しました');
     }
+
+    // 商品詳細表示
+    public function show($id)
+    {
+        $product = Product::with(['likes', 'comments'])->findOrFail($id);
+
+        return view('products.show', compact('product'));
+    }
+
 }

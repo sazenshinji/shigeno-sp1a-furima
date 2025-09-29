@@ -13,13 +13,9 @@ class Product extends Model
         'name',
         'price',
         'image_path',
-        'is_my_like',
-        'is_sold',
-        'like_count',
-        'comment_count',
-        'bran',
+        'brand',
         'description',
-        'category_id',
+        'seller_id',
         'condition_id'
     ];
     /**
@@ -32,4 +28,33 @@ class Product extends Model
         }
         return $query;
     }
+
+    // 商品は1件の取引を持つ（購入済み判定用）
+    public function transaction()
+    {
+        return $this->hasOne(Transaction::class);
+    }
+
+    // 購入済みかどうか判定するアクセサ
+    public function getIsSoldAttribute()
+    {
+        return $this->transaction()->exists();
+    }
+
+    // いいねされた関係
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    public function seller()
+    {
+        return $this->belongsTo(User::class, 'seller_id');
+    }
+    
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
 }
