@@ -4,7 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Carbon;
 
 class UsersTableSeeder extends Seeder
 {
@@ -13,7 +14,7 @@ class UsersTableSeeder extends Seeder
         $param = [
             'name' => '山田 太郎',
             'email' => '1234@abcd1',
-            'password' => '12345678',
+            'password' => Hash::make('12345678'), // ハッシュ化して保存
             'created_at' => Carbon::create(2025, 9, 25, 12, 57, 0),
             'updated_at' => Carbon::create(2025, 9, 25, 12, 57, 0),
         ];
@@ -21,7 +22,7 @@ class UsersTableSeeder extends Seeder
         $param = [
             'name' => '山田 次郎',
             'email' => '1234@abcd2',
-            'password' => '12345678',
+            'password' => Hash::make('12345678'), // ハッシュ化して保存
             'created_at' => Carbon::create(2025, 9, 25, 12, 57, 0),
             'updated_at' => Carbon::create(2025, 9, 25, 12, 57, 0),
         ];
@@ -29,7 +30,7 @@ class UsersTableSeeder extends Seeder
         $param = [
             'name' => '山田 三郎',
             'email' => '1234@abcd3',
-            'password' => '12345678',
+            'password' => Hash::make('12345678'), // ハッシュ化して保存
             'created_at' => Carbon::create(2025, 9, 25, 12, 57, 0),
             'updated_at' => Carbon::create(2025, 9, 25, 12, 57, 0),
         ];
@@ -37,7 +38,7 @@ class UsersTableSeeder extends Seeder
         $param = [
             'name' => '山田 四郎',
             'email' => '1234@abcd4',
-            'password' => '12345678',
+            'password' => Hash::make('12345678'), // ハッシュ化して保存
             'created_at' => Carbon::create(2025, 9, 25, 12, 57, 0),
             'updated_at' => Carbon::create(2025, 9, 25, 12, 57, 0),
         ];
@@ -45,7 +46,7 @@ class UsersTableSeeder extends Seeder
         $param = [
             'name' => '山田 五郎',
             'email' => '1234@abcd5',
-            'password' => '12345678',
+            'password' => Hash::make('12345678'), // ハッシュ化して保存
             'created_at' => Carbon::create(2025, 9, 25, 12, 57, 0),
             'updated_at' => Carbon::create(2025, 9, 25, 12, 57, 0),
         ];
