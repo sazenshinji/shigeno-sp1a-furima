@@ -283,3 +283,37 @@ body {
   border-radius: 12px;
   font-size: 13px;
 }
+
+.comments {
+  margin-top: 20px;
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+}
+
+.comment-item {
+  margin-bottom: 15px;
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.comment-user-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.comment-username {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.comment-body {
+  margin-left: 42px; /* アイコン分だけずらす */
+  font-size: 14px;
+  color: #333;
+}

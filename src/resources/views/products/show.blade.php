@@ -46,10 +46,34 @@
         <span class="badge">{{ $category->name }}</span>
         @endforeach
       </p>
-
       <p><strong>商品の状態：</strong>
         {{ $product->condition->name }}
       </p>
+    </div>
+
+    <h3>コメント({{ $product->comments->count() }})</h3>
+    <div class="comments">
+      @forelse($product->comments as $comment)
+      <div class="comment-item">
+        <div class="comment-header">
+          {{-- プロフィール画像 --}}
+          @if($comment->user->profile && $comment->user->profile->user_image)
+          <img src="{{ asset('storage/' . $comment->user->profile->user_image) }}" alt="ユーザー画像" class="comment-user-img">
+          @else
+          <img src="{{ asset('storage/images/default_user.png') }}" alt="ユーザー画像" class="comment-user-img">
+          @endif
+
+          <span class="comment-username">
+            {{ $comment->user->name }}
+          </span>
+        </div>
+        <div class="comment-body">
+          {{ $comment->comment }}
+        </div>
+      </div>
+      @empty
+      <p>コメントはまだありません。</p>
+      @endforelse
     </div>
 
   </div>

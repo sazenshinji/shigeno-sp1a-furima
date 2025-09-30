@@ -65,8 +65,12 @@ class ProductController extends Controller
     // 商品詳細表示
     public function show($id)
     {
-        $product = Product::with(['likes', 'comments', 'categories', 'condition'])
-            ->findOrFail($id);
+        $product = Product::with([
+            'likes',
+            'comments.user.profile',
+            'categories',
+            'condition'
+        ])->findOrFail($id);
 
         return view('products.show', compact('product'));
     }
