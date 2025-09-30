@@ -47,6 +47,12 @@ class Product extends Model
         return $this->hasMany(Like::class);
     }
 
+    // 指定ユーザーがいいねしているか判定
+    public function isLikedBy($user)
+    {
+        return $this->likes()->where('user_id', $user->id)->exists();
+    }
+
     public function seller()
     {
         return $this->belongsTo(User::class, 'seller_id');
@@ -57,4 +63,14 @@ class Product extends Model
         return $this->hasMany(Comment::class);
     }
 
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'category_product');
+    }
+
+    public function condition()
+    {
+        return $this->belongsTo(Condition::class);
+    }
+    
 }

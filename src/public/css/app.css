@@ -209,17 +209,26 @@ body {
 
 .icons {
   display: flex;
-  gap: 20px;
+  flex-direction: column; /* 縦並びに */
+  align-items: flex-start;
+  gap: 6px;
   margin: 10px 0;
 }
 
-.icon {
+.icon-row {
   display: flex;
-  align-items: center;
-  gap: 6px;
+  gap: 20px;
 }
 
-.icon img {
+.count-row {
+  display: flex;
+  gap: 36px;
+  font-size: 14px;
+  color: #333;
+  margin-left: 8px;
+}
+
+.icon-row img {
   width: 24px;
   height: 24px;
 }
@@ -240,4 +249,37 @@ body {
 
 .description {
   line-height: 1.6;
+}
+
+.like-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}
+
+.like-btn img {
+  width: 24px;
+  height: 24px;
+}
+
+.product-info {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #333;
+}
+
+.product-info p {
+  margin: 6px 0;
+}
+
+
+.badge {
+  display: inline-block;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  padding: 3px 8px;
+  margin-right: 6px;
+  border-radius: 12px;
+  font-size: 13px;
 }

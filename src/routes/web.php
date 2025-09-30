@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\LikeController;
 
 Route::get('/', [ProductController::class, 'index'])->name('products.index');
 
@@ -13,6 +14,7 @@ Route::post('/products', [ProductController::class, 'store'])->name('products.st
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/products/{product}/like', [LikeController::class, 'toggle'])->name('products.like');
 });
 
 Route::post('/register', [RegisterController::class, 'store'])
