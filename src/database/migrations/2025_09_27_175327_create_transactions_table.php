@@ -18,6 +18,7 @@ class CreateTransactionsTable extends Migration
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->dateTime('date');
+            $table->tinyInteger('payment_method');
             $table->string('postal_code')->nullable();
             $table->string('address')->nullable();
             $table->string('building')->nullable();

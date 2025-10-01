@@ -34,7 +34,7 @@
       </div>
     </div>
 
-    <button class="purchase-btn">購入手続きへ</button>
+    <a href="{{ route('products.purchase', $product->id) }}" class="purchase-btn">購入手続きへ</a>
 
     <h3>商品説明</h3>
     <p class="description">{{ $product->description }}</p>
@@ -56,25 +56,31 @@
       @forelse($product->comments as $comment)
       <div class="comment-item">
         <div class="comment-header">
-          {{-- プロフィール画像 --}}
           @if($comment->user->profile && $comment->user->profile->user_image)
-          <img src="{{ asset('storage/' . $comment->user->profile->user_image) }}" alt="ユーザー画像" class="comment-user-img">
+          <img src="{{ asset('storage/' . $comment->user->profile->user_image) }}" class="comment-user-img">
           @else
-          <img src="{{ asset('storage/images/default_user.png') }}" alt="ユーザー画像" class="comment-user-img">
+          <img src="{{ asset('storage/images/default_user.png') }}" class="comment-user-img">
           @endif
-
-          <span class="comment-username">
-            {{ $comment->user->name }}
-          </span>
+          <span class="comment-username">{{ $comment->user->name }}</span>
         </div>
-        <div class="comment-body">
-          {{ $comment->comment }}
-        </div>
+        <div class="comment-body">{{ $comment->comment }}</div>
       </div>
       @empty
       <p>コメントはまだありません。</p>
       @endforelse
     </div>
+
+    @auth
+    <h3>商品へのコメント</h3>
+    <form action="{{ route('products.comments.store', $product->id) }}" method="POST">
+      @csrf
+      <textarea name="comment" rows="3" class="comment-textarea" placeholder="コメントを入力してください">{{ old('comment') }}</textarea>
+      @error('comment')
+      <div class="error">{{ $message }}</div>
+      @enderror
+      <button type="submit" class="comment-submit-btn">コメントを送信する</button>
+    </form>
+    @endauth
 
   </div>
 </div>

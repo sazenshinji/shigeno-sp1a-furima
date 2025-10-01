@@ -233,7 +233,8 @@ body {
   height: 24px;
 }
 
-.purchase-btn {
+.purchase-btn,
+.comment-submit-btn {
   background-color: #ff5555;
   color: white;
   padding: 12px;
@@ -241,6 +242,9 @@ body {
   border-radius: 6px;
   font-size: 16px;
   cursor: pointer;
+  display: block;
+  width: 100%;  /* 横幅を親要素に合わせる */
+  text-align: center;
 }
 
 .purchase-btn:hover {
@@ -316,4 +320,101 @@ body {
   margin-left: 42px; /* アイコン分だけずらす */
   font-size: 14px;
   color: #333;
+    word-wrap: break-word;  /* 長い単語でも強制改行 */
+  overflow-wrap: break-word; /* 推奨プロパティ */
+  white-space: normal;    /* 必ず折り返す */
+  max-width: 30em;        /* 表示幅を約40文字分に制限 */
+}
+
+.comment-textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  resize: vertical;
+}
+
+.comment-submit-btn:hover {
+  background-color: #e53935;
+}
+
+.error {
+  color: red;
+  font-size: 13px;
+}
+
+.purchase-container {
+  display: flex;
+  gap: 30px;
+  margin: 30px auto;
+  max-width: 1000px;
+}
+
+.purchase-left {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.purchase-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.product-info-box {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.purchase-product-img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.payment-select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.address-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.address-edit {
+  color: blue;
+  font-size: 14px;
+  text-decoration: underline;
+}
+
+.summary-box {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 15px;
+  background-color: #fafafa;
+}
+
+.purchase-btn {
+  background-color: #ff5555;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.purchase-btn:hover {
+  background-color: #e53935;
 }
