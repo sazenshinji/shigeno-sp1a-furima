@@ -4,7 +4,12 @@
 
 <div class="product-detail">
   <div class="product-detail-left">
-    <img src="{{ asset('storage/' . $product->image_path) }}" alt="{{ $product->name }}" class="detail-image">
+    <div class="detail-images">
+      <img src="{{ asset('storage/' . $product->image_path) }}" alt="{{ $product->name }}" class="detail-image">
+      @if ($product->is_sold)
+      <img src="{{ asset('storage/images/11_sold2.png') }}" alt="SOLD" class="product-sold-overlay">
+      @endif
+    </div>
   </div>
 
   <div class="product-detail-right">
@@ -34,7 +39,11 @@
       </div>
     </div>
 
+    @if ($product->is_sold)
+    <button class="purchase-btn disabled" disabled>購入済み</button>
+    @else
     <a href="{{ route('products.purchase', $product->id) }}" class="purchase-btn">購入手続きへ</a>
+    @endif
 
     <h3>商品説明</h3>
     <p class="description">{{ $product->description }}</p>

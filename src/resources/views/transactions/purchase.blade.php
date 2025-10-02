@@ -32,11 +32,18 @@
             {{-- 配送先 --}}
             <div class="address-header">
                 <h4>配送先</h4>
-                <a href="{{ route('profile.edit') }}" class="address-edit">変更する</a>
+                <a href="{{ route('profile.edit_temp', ['product_id' => $product->id]) }}" class="address-edit">変更する</a>
             </div>
-            <p>〒 {{ $profile->postal_code }}</p>
-            <p>{{ $profile->address }}</p>
-            <p>{{ $profile->building }}</p>
+
+            @php
+            // セッションに一時住所があればそれを優先
+            $displayProfile = session('temp_profile', $profile);
+            @endphp
+
+            <p>〒 {{ $displayProfile['postal_code'] ?? $displayProfile->postal_code }}</p>
+            <p>{{ $displayProfile['address'] ?? $displayProfile->address }}</p>
+            <p>{{ $displayProfile['building'] ?? $displayProfile->building }}</p>
+
     </div>
 
     <div class="purchase-right">
@@ -52,4 +59,7 @@
         </form>
     </div>
 </div>
+
+<script src="{{ asset('js/purchase_script.js') }}"></script>
+
 @endsection

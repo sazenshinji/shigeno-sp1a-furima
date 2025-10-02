@@ -3,16 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\UpdateAddressRequest;
 use App\Http\Requests\ProfileRequest;
 use App\Models\Profile;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class ProfileController extends Controller
 {
     public function edit()
     {
         $profile = Auth::user()->profile;
-        return view('profile.edit', compact('profile'));
+        return view('profiles.edit', compact('profile'));
     }
 
     public function update(ProfileRequest $request)
@@ -34,4 +36,39 @@ class ProfileController extends Controller
 
         return redirect()->route('products.index')->with('success', 'プロフィールを更新しました');
     }
+
+    // 一時住所変更フォーム表示
+    public function editTemp(Request $request)
+    {
+        $productId = $request->query('product_id');
+
+        // セッションから一時住所情報を取得（未設定なら空配列）
+        $tempProfile = session('temp_profile', [
+            'postal_code' => '',
+            'address'    => '',
+            'building'   => '',
+        ]);
+
+        return view('profiles.edit_temp', [
+            'tempProfile' => $tempProfile,
+            'productId'   => $productId,
+        ]);
+    }
+
+    // 一時住所更新処理
+    public function updateTemp(Request $request)
+    {
+        $validated = $request->validate([
+            'postal_code' => 'required|min:7|max:8',
+            'address'     => 'required|max:40',
+            'building'    => 'nullable|max:40',
+        ]);
+
+        // セッションに保存
+        session(['temp_profile' => $validated]);
+
+        // 購入画面に戻る
+        return redirect()->route('products.purchase', ['product' => $request->product_id]);
+    }
+
 }
