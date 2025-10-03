@@ -13,7 +13,7 @@ class TransactionsTableSeeder extends Seeder
         $param = [
             'product_id' => 5,
             'user_id' => 5,
-            'date' => '2025-07-28 12:30:00',
+            'datetime' => '2025-07-28 12:30:00',
             'payment_method' => 1,
             'postal_code' => '123-0001',
             'address' => '東京都港区高輪1-1-1',
@@ -25,7 +25,7 @@ class TransactionsTableSeeder extends Seeder
         $param = [
             'product_id' => 6,
             'user_id' => 5,
-            'date' => '2025-07-29 12:30:00',
+            'datetime' => '2025-07-29 12:30:00',
             'payment_method' => 2,
             'postal_code' => '123-0001',
             'address' => '東京都港区高輪1-1-1',
@@ -37,7 +37,7 @@ class TransactionsTableSeeder extends Seeder
         $param = [
             'product_id' => 7,
             'user_id' => 1,
-            'date' => '2025-06-29 12:30:00',
+            'datetime' => '2025-06-29 12:30:00',
             'payment_method' => 2,
             'postal_code' => '456-0001',
             'address' => '東京都目黒区上目黒1-1-1',

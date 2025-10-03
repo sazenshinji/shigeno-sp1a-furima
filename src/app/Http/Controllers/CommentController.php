@@ -17,7 +17,7 @@ class CommentController extends Controller
             'product_id' => $product->id,
             'user_id'    => Auth::id(),
             'comment'    => $request->comment,
-            'date'       => Carbon::now(),
+            'datetime'       => Carbon::now(),
         ]);
 
         return redirect()->route('products.show', $product->id)

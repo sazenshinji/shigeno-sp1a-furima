@@ -13,7 +13,7 @@ class Comment extends Model
         'product_id',
         'user_id',
         'comment',
-        'date',
+        'datetime',
     ];
 
     public function user()

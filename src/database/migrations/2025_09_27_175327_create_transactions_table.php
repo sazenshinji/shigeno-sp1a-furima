@@ -10,12 +10,12 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->constrained()->onDelete('cascade');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->dateTime('date');
+            $table->foreignId('product_id')->constrained()->cascadeOnDelete()->unique();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->dateTime('datetime');
             $table->tinyInteger('payment_method');
-            $table->string('postal_code')->nullable();
-            $table->string('address')->nullable();
+            $table->string('postal_code');
+            $table->string('address');
             $table->string('building')->nullable();
             $table->timestamps();
         });
