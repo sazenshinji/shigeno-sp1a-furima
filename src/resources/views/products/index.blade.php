@@ -1,7 +1,10 @@
 @extends('layouts.app')
 
-@section('content')
+@section('css')
+<link rel="stylesheet" href="{{ asset('css/index.css') }}">
+@endsection
 
+@section('content')
 {{-- タブ切り替え --}}
 <div class="tabs">
   <a href="{{ route('products.index', ['tab' => 'recommend', 'keyword' => request('keyword')]) }}"
@@ -40,5 +43,4 @@
   <p>該当する商品は見つかりませんでした。</p>
   @endforelse
 </div>
-
 @endsection

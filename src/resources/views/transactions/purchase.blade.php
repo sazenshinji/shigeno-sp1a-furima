@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('css')
+<link rel="stylesheet" href="{{ asset('css/purchase.css') }}">
+@endsection
+
 @section('content')
 <div class="purchase-container">
     <div class="purchase-left">
@@ -16,16 +20,14 @@
 
         {{-- 支払い方法 --}}
         <h4>支払い方法</h4>
-        <form action="{{ route('products.purchase.store', $product->id) }}" method="POST">
+        <form action="{{ route('products.purchase.store', $product->id) }}" method="POST" novalidate>
             @csrf
             <select name="payment_method" class="payment-select" required>
                 <option value="">選択してください</option>
-                <option value="1">コンビニ払い</option>
-                <option value="2">カード支払い</option>
+                <option value="1" {{ old('payment_method') == 1 ? 'selected' : '' }}>コンビニ払い</option>
+                <option value="2" {{ old('payment_method') == 2 ? 'selected' : '' }}>カード支払い</option>
             </select>
-            @error('payment_method')
-            <div class="error">{{ $message }}</div>
-            @enderror
+
 
             <hr>
 
@@ -36,13 +38,17 @@
             </div>
 
             @php
-            // セッションに一時住所があればそれを優先
             $displayProfile = session('temp_profile', $profile);
             @endphp
 
+            @if ($displayProfile)
             <p>〒 {{ $displayProfile['postal_code'] ?? $displayProfile->postal_code }}</p>
             <p>{{ $displayProfile['address'] ?? $displayProfile->address }}</p>
             <p>{{ $displayProfile['building'] ?? $displayProfile->building }}</p>
+            @else
+            <p class="error-noaddress">住所の登録がありません。</p>
+            @endif
+
 
     </div>
 
@@ -56,6 +62,15 @@
             <p id="selected-method">選択してください</p>
         </div>
         <button type="submit" class="purchase-btn">購入する</button>
+
+        {{-- ★ エラーメッセージをここにまとめて出す --}}
+        @error('payment_method')
+        <div class="error">{{ $message }}</div>
+        @enderror
+        @error('address')
+        <div class="error">{{ $message }}</div>
+        @enderror
+
         </form>
     </div>
 </div>

@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('css')
+<link rel="stylesheet" href="{{ asset('css/edit_temp.css') }}">
+@endsection
+
 @section('content')
 <div class="address-edit-container">
   <h2 class="title">住所の変更</h2>
@@ -29,5 +33,4 @@
     <button type="submit" class="update-btn">更新する</button>
   </form>
 </div>
-
 @endsection

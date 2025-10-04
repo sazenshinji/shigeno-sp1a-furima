@@ -1,7 +1,10 @@
 @extends('layouts.app')
 
-@section('content')
+@section('css')
+<link rel="stylesheet" href="{{ asset('css/show.css') }}">
+@endsection
 
+@section('content')
 <div class="product-detail">
   <div class="product-detail-left">
     <div class="detail-images">

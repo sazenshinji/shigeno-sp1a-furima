@@ -1,0 +1,169 @@
+.product-detail {
+  display: flex;
+  gap: 30px;
+  margin: 30px auto;
+  max-width: 1000px;
+}
+
+.product-detail-left {
+  flex: 1;
+}
+
+.detail-images {
+  position: relative;
+}
+
+.detail-image {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.product-detail-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.price {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.icons {
+  display: flex;
+  flex-direction: column; /* 縦並びに */
+  align-items: flex-start;
+  gap: 6px;
+  margin: 10px 0;
+}
+
+.icon-row {
+  display: flex;
+  gap: 20px;
+}
+
+.count-row {
+  display: flex;
+  gap: 36px;
+  font-size: 14px;
+  color: #333;
+  margin-left: 8px;
+}
+
+.icon-row img {
+  width: 24px;
+  height: 24px;
+}
+
+.purchase-btn,
+.comment-submit-btn {
+  background-color: #ff5555;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  display: block;
+  width: 100%;  /* 横幅を親要素に合わせる */
+  text-align: center;
+}
+
+.purchase-btn:hover {
+  background-color: #e53935;
+}
+
+.description {
+  line-height: 1.6;
+}
+
+.like-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+}
+
+.like-btn img {
+  width: 24px;
+  height: 24px;
+}
+
+.product-info {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #333;
+}
+
+.product-info p {
+  margin: 6px 0;
+}
+
+
+.badge {
+  display: inline-block;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  padding: 3px 8px;
+  margin-right: 6px;
+  border-radius: 12px;
+  font-size: 13px;
+}
+
+.comments {
+  margin-top: 20px;
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+}
+
+.comment-item {
+  margin-bottom: 15px;
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.comment-user-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.comment-username {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.comment-body {
+  margin-left: 42px; /* アイコン分だけずらす */
+  font-size: 14px;
+  color: #333;
+    word-wrap: break-word;  /* 長い単語でも強制改行 */
+  overflow-wrap: break-word; /* 推奨プロパティ */
+  white-space: normal;    /* 必ず折り返す */
+  max-width: 30em;        /* 表示幅を約40文字分に制限 */
+}
+
+.comment-textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  resize: vertical;
+}
+
+.comment-submit-btn:hover {
+  background-color: #e53935;
+}
+
+.error {
+  color: red;
+  font-size: 13px;
+}

@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('css')
+<link rel="stylesheet" href="{{ asset('css/edit.css') }}">
+@endsection
+
 @section('content')
 <div class="auth-container">
   <h2>プロフィール設定</h2>
@@ -29,7 +33,7 @@
       value="{{ old('building', $profile->building ?? '') }}">
     <button type="submit">更新する</button>
   </form>
-  
+
 </div>
 
 <!-- Loading script for image confirmation -->

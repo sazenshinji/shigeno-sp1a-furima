@@ -1,0 +1,93 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #888;
+    padding: 10px 20px;
+}
+.logo {
+    font-weight: bold;
+}
+.logo-img {
+    height: 30px;
+    margin-top: 10px;
+}
+
+/* 検索ボックス */
+.search-box {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+}
+
+.search-box input[type="text"] {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
+  width: 220px;
+}
+
+.search-box button {
+  padding: 6px 12px;
+  border: none;
+  background-color: #ff6f61;
+  color: #fff;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+}
+
+.search-box button:hover {
+  background-color: #ff3b2f;
+}
+
+.search-result {
+  margin: 15px 0;
+  font-weight: bold;
+  color: #555;
+}
+
+.nav-buttons a {
+    margin-left: 10px;
+    text-decoration: none;
+    color: #333;
+}
+.nav-buttons a:hover {
+  text-decoration: underline;
+}
+
+.product-grid {
+  display: flex;
+  flex-wrap: wrap;        /* 複数行に折り返す */
+  gap: 20px;              /* カード同士の隙間 */
+  justify-content: flex-start;
+}
+.product-card {
+  width: 200px;           /* カードの横幅 */
+  border: 1px solid #ccc; /* 枠線を追加 */
+  border-radius: 8px;     /* 角を少し丸める */
+  padding: 10px;
+  background-color: #fff; /* 背景を白で統一 */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* ほんのり影 */
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.product-card img {
+    width: 100%;
+    height: auto;
+}
+/* hover時のアニメーション */
+.product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 12px rgba(0,0,0,0.15);
+}
+.product-card p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}

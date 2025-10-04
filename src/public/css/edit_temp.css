@@ -1,0 +1,47 @@
+.address-edit-container {
+  max-width: 400px;
+  margin: 30px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.address-edit-container .title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.address-edit-container label {
+  display: block;
+  margin: 10px 0 5px;
+  font-weight: bold;
+}
+
+.address-edit-container input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.update-btn {
+  background-color: #ff5555;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  width: 100%;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.update-btn:hover {
+  background-color: #e53935;
+}
+
+.error {
+  color: red;
+  font-size: 13px;
+}

@@ -13,8 +13,7 @@ class TransactionController extends Controller
     // 購入画面表示
     public function create(Product $product)
     {
-        $profile = Auth::user()->profile; // ログイン中ユーザーのプロフィール
-
+        $profile = Auth::user()->profile ?? null; // プロフィール未登録も許容
         return view('transactions.purchase', compact('product', 'profile'));
     }
 
@@ -23,18 +22,38 @@ class TransactionController extends Controller
     {
         $request->validate([
             'payment_method' => 'required|in:1,2',
+        ], [
+            'payment_method.required' => '支払い方法を選択してください。',
+            'payment_method.in' => '不正な支払い方法です。',
         ]);
+
+        $tempProfile = session('temp_profile');
+        $profile = Auth::user()->profile ?? null;
+
+        $postal_code = $tempProfile['postal_code'] ?? ($profile->postal_code ?? null);
+        $address     = $tempProfile['address'] ?? ($profile->address ?? null);
+        $building    = $tempProfile['building'] ?? ($profile->building ?? null);
+
+        if (!$postal_code || !$address) {
+            return back()
+                ->withErrors(['address' => '送付先を入力してください'])
+                ->withInput();
+        }
 
         Transaction::create([
             'product_id'     => $product->id,
             'user_id'        => Auth::id(),
-            'date'           => Carbon::now(),
+            'datetime'       => Carbon::now(),
             'payment_method' => $request->payment_method,
-            'postal_code'    => $request->postal_code ?? Auth::user()->profile->postal_code,
-            'address'        => $request->address ?? Auth::user()->profile->address,
-            'building'       => $request->building ?? Auth::user()->profile->building,
+            'postal_code'    => $postal_code,
+            'address'        => $address,
+            'building'       => $building,
         ]);
 
-        return redirect()->route('products.index')->with('success', '購入が完了しました！');
+        // ★ 一時住所を削除
+        session()->forget('temp_profile');
+
+        return redirect()->route('products.index')
+            ->with('success', '購入が完了しました！');
     }
 }

@@ -1,0 +1,17 @@
+.auth-container {
+    width: 300px;
+    margin: 50px auto;
+    text-align: center;
+}
+.auth-container input, 
+.auth-container button {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 8px;
+}
+
+.error {
+  color: red;
+  font-size: 13px;
+}
