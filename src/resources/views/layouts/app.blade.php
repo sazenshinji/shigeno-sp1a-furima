@@ -7,6 +7,9 @@
   <title>フリマアプリ</title>
   <link rel="stylesheet" href="{{ asset('css/sanitize.css') }}" />
   <link rel="stylesheet" href="{{ asset('css/common.css')}}">
+  <!-- Stripe -->
+  <script src="https://js.stripe.com/v3/"></script>
+  <meta name="stripe-key" content="{{ config('services.stripe.key') }}">
   @yield('css')
 </head>
 

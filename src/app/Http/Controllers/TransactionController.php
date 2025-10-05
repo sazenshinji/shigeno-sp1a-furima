@@ -7,6 +7,8 @@ use App\Models\Product;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Stripe\Stripe;
+use Stripe\Charge;
 
 class TransactionController extends Controller
 {
@@ -24,7 +26,7 @@ class TransactionController extends Controller
             'payment_method' => 'required|in:1,2',
         ], [
             'payment_method.required' => '支払い方法を選択してください。',
-            'payment_method.in' => '不正な支払い方法です。',
+            'payment_method.in'       => '不正な支払い方法です。',
         ]);
 
         $tempProfile = session('temp_profile');
@@ -40,6 +42,19 @@ class TransactionController extends Controller
                 ->withInput();
         }
 
+        // カード払いの場合は Stripe 決済
+        if ($request->payment_method == 2) {
+            Stripe::setApiKey(env('STRIPE_SECRET'));
+
+            Charge::create([
+                'amount'      => $product->price, // 円単位 (整数)
+                'currency'    => 'jpy',
+                'description' => $product->name,
+                'source'      => $request->stripeToken, // ★ ここが必須
+            ]);
+        }
+
+        // トランザクション保存
         Transaction::create([
             'product_id'     => $product->id,
             'user_id'        => Auth::id(),
@@ -50,10 +65,11 @@ class TransactionController extends Controller
             'building'       => $building,
         ]);
 
-        // ★ 一時住所を削除
+        // 一時住所を削除
         session()->forget('temp_profile');
 
         return redirect()->route('products.index')
             ->with('success', '購入が完了しました！');
     }
+
 }

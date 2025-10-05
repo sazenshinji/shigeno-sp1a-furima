@@ -86,3 +86,16 @@
     margin-top: 10px;
     text-align: center; /* ボタンの下で中央寄せ */
 }
+
+#card-section {
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 6px;
+  background-color: #fafafa;
+}
+
+#card-errors {
+  color: red;
+  margin-top: 8px;
+  font-size: 13px;
+}

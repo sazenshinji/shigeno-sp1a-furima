@@ -22,11 +22,21 @@
         <h4>支払い方法</h4>
         <form action="{{ route('products.purchase.store', $product->id) }}" method="POST" novalidate>
             @csrf
+
             <select name="payment_method" class="payment-select" required>
                 <option value="">選択してください</option>
                 <option value="1" {{ old('payment_method') == 1 ? 'selected' : '' }}>コンビニ払い</option>
                 <option value="2" {{ old('payment_method') == 2 ? 'selected' : '' }}>カード支払い</option>
             </select>
+
+            <input type="hidden" name="stripeToken" id="stripeToken">
+
+            {{-- ★ カード入力欄（初期は非表示） --}}
+            <div id="card-section" style="display:none;">
+                <h4>カード情報</h4>
+                <div id="card-element"></div>
+            </div>
+
 
 
             <hr>
@@ -49,7 +59,6 @@
             <p class="error-noaddress">住所の登録がありません。</p>
             @endif
 
-
     </div>
 
     <div class="purchase-right">
@@ -63,7 +72,7 @@
         </div>
         <button type="submit" class="purchase-btn">購入する</button>
 
-        {{-- ★ エラーメッセージをここにまとめて出す --}}
+        {{-- エラーメッセージをここにまとめて出す --}}
         @error('payment_method')
         <div class="error">{{ $message }}</div>
         @enderror
