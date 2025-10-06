@@ -23,6 +23,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/products/{product}/comments', [CommentController::class, 'store'])->name('products.comments.store');
     Route::get('/products/{product}/purchase', [TransactionController::class, 'create'])->name('products.purchase');
     Route::post('/products/{product}/purchase', [TransactionController::class, 'store'])->name('products.purchase.store');
+    Route::get('/profile', [ProfileController::class, 'profile'])->name('profile.profile');
+
 });
 
 Route::post('/register', [RegisterController::class, 'store'])

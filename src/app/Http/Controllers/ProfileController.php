@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UpdateAddressRequest;
 use App\Http\Requests\ProfileRequest;
 use App\Models\Profile;
+use App\Models\Product;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -69,6 +71,23 @@ class ProfileController extends Controller
 
         // 購入画面に戻る
         return redirect()->route('products.purchase', ['product' => $request->product_id]);
+    }
+
+    public function  profile()
+    {
+        $user = Auth::user();
+
+        // 出品した商品
+        $myProducts = Product::where('seller_id', $user->id)->get();
+
+        // 購入した商品
+        $purchasedProducts = Product::whereIn('id', function ($query) use ($user) {
+            $query->select('product_id')
+                ->from('transactions')
+                ->where('user_id', $user->id);
+        })->get();
+
+        return view('profiles.profile', compact('user', 'myProducts', 'purchasedProducts'));
     }
 
 }

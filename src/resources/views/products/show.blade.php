@@ -14,7 +14,7 @@
       @endif
     </div>
   </div>
-
+  
   <div class="product-detail-right">
     <h2>{{ $product->name }}</h2>
     <p class="brand">{{ $product->brand }}</p>

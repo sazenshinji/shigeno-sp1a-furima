@@ -59,25 +59,27 @@
   background-color: #fafafa;
 }
 
-
 .purchase-btn {
-  background-color: #ff5555;
-  color: white;
-  padding: 12px;
+  background: #e60023; /* 赤 */
+  color: #fff;
   border: none;
-  border-radius: 6px;
+  padding: 12px 20px;
   font-size: 16px;
+  border-radius: 6px;
   cursor: pointer;
+  width: 100%;
+  transition: background 0.3s ease;
 }
 
 .purchase-btn:hover {
-  background-color: #e53935;
+  background: #cc0020;
 }
 
-.purchase-btn.disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-  pointer-events: none;
+/* 無効化状態 */
+.purchase-btn.disabled,
+.purchase-btn:disabled {
+  background: #ccc !important;
+  cursor: not-allowed !important;
 }
 
 .error {
@@ -98,4 +100,8 @@
   color: red;
   margin-top: 8px;
   font-size: 13px;
+}
+
+.error-noaddress {
+    color: red;
 }

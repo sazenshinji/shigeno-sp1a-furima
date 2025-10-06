@@ -43,7 +43,7 @@
       <a href="{{ route('login') }}">ログイン</a>
       @endif
 
-      <a href="#">マイページ</a>
+      <a href="{{ route('profile.profile') }}" class="mypage-btn">マイページ</a>
       <a href="{{ route('products.create') }}">出品</a>
     </div>
 

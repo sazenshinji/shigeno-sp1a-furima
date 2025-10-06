@@ -1,6 +1,55 @@
-.error {
-    color: red;
+.konbini-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 中央揃え */
+    justify-content: center;
+    text-align: center;
+    margin-top: 50px;
+}
+
+.konbini-container h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+.konbini-box {
+    border: 2px solid #ccc;       /* 四角い枠 */
+    border-radius: 8px;           /* 少し丸み */
+    padding: 20px 30px;
+    margin: 20px 0;
+    background: #f9f9f9;          /* 薄い背景色 */
+    width: fit-content;           /* コンテンツ幅に合わせる */
+    text-align: left;             /* リストは左揃え */
+}
+
+.konbini-box ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.konbini-box li {
+    margin: 8px 0;
     font-size: 16px;
-    margin-top: 10px;
-    text-align: center; /* ボタンの下で中央寄せ */
+}
+
+.note {
+    font-size: 14px;
+    color: #666;
+    margin: 15px 0;
+}
+
+.purchase-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.purchase-btn:hover {
+    background: #0056b3;
 }

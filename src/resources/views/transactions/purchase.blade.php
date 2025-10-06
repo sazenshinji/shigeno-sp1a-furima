@@ -20,24 +20,19 @@
 
         {{-- 支払い方法 --}}
         <h4>支払い方法</h4>
-        <form action="{{ route('products.purchase.store', $product->id) }}" method="POST" novalidate>
+        <form id="payment-form" action="{{ route('products.purchase.store', $product->id) }}" method="POST" novalidate>
             @csrf
-
             <select name="payment_method" class="payment-select" required>
                 <option value="">選択してください</option>
                 <option value="1" {{ old('payment_method') == 1 ? 'selected' : '' }}>コンビニ払い</option>
                 <option value="2" {{ old('payment_method') == 2 ? 'selected' : '' }}>カード支払い</option>
             </select>
 
-            <input type="hidden" name="stripeToken" id="stripeToken">
-
-            {{-- ★ カード入力欄（初期は非表示） --}}
-            <div id="card-section" style="display:none;">
-                <h4>カード情報</h4>
+            {{-- カード入力欄（カード払いのときだけ使う） --}}
+            <div id="card-element-wrapper" style="display:none; margin:10px 0;">
                 <div id="card-element"></div>
+                <div id="card-errors" class="error"></div>
             </div>
-
-
 
             <hr>
 
@@ -58,7 +53,6 @@
             @else
             <p class="error-noaddress">住所の登録がありません。</p>
             @endif
-
     </div>
 
     <div class="purchase-right">
@@ -70,20 +64,28 @@
             <h4>支払い方法</h4>
             <p id="selected-method">選択してください</p>
         </div>
-        <button type="submit" class="purchase-btn">購入する</button>
 
-        {{-- エラーメッセージをここにまとめて出す --}}
+        <button type="submit"
+            class="purchase-btn @if(!$displayProfile) disabled @endif">
+            購入する
+        </button>
+
+        {{-- エラーメッセージ --}}
         @error('payment_method')
         <div class="error">{{ $message }}</div>
         @enderror
         @error('address')
         <div class="error">{{ $message }}</div>
         @enderror
-
         </form>
     </div>
 </div>
 
+{{-- Stripe公開キーとclient_secretをJSに渡す --}}
+<script>
+    window.stripePublicKey = "{{ env('STRIPE_KEY') }}";
+    window.clientSecret = "{{ $clientSecret ?? '' }}";
+</script>
+<script src="https://js.stripe.com/v3/"></script>
 <script src="{{ asset('js/purchase_script.js') }}"></script>
-
 @endsection
