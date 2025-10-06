@@ -1,0 +1,6 @@
+.error {
+    color: red;
+    font-size: 16px;
+    margin-top: 10px;
+    text-align: center; /* ボタンの下で中央寄せ */
+}
