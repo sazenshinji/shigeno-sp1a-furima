@@ -10,12 +10,12 @@ use App\Http\Controllers\TransactionController;
 
 Route::get('/', [ProductController::class, 'index'])->name('products.index');
 
-Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
-Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+
 
 Route::middleware(['auth'])->group(function () {
-    // Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    // Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+    Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 
@@ -23,8 +23,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/products/{product}/comments', [CommentController::class, 'store'])->name('products.comments.store');
     Route::get('/products/{product}/purchase', [TransactionController::class, 'create'])->name('products.purchase');
     Route::post('/products/{product}/purchase', [TransactionController::class, 'store'])->name('products.purchase.store');
-    Route::get('/profile', [ProfileController::class, 'profile'])->name('profile.profile');
 
+    Route::get('/profile', [ProfileController::class, 'profile'])->name('profile.show');
 });
 
 Route::post('/register', [RegisterController::class, 'store'])

@@ -7,7 +7,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #888;
+    background: #000;
     padding: 10px 20px;
 }
 .logo {
@@ -90,4 +90,34 @@ body {
   font-size: 14px;
   font-weight: bold;
   color: #333;
+}
+
+/* ログイン/ログアウトとマイページのリンクだけ白文字に */
+.nav-buttons .nav-login,
+.nav-buttons .nav-logout,
+.nav-buttons .nav-mypage {
+  color: #fff; /* 白文字 */
+}
+
+.nav-buttons .nav-login:hover,
+.nav-buttons .nav-logout:hover,
+.nav-buttons .nav-mypage:hover {
+  text-decoration: underline;
+  color: #f0f0f0; /* hover時は少しグレー寄り */
+}
+
+/* 出品ボタンだけ白背景 */
+.nav-buttons .nav-create {
+  background-color: #fff;   /* 白背景 */
+  color: #333;              /* 文字色は濃いグレー */
+  padding: 6px 12px;
+  border-radius: 4px;
+  border: 1px solid #ccc;   /* 薄い枠線 */
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.nav-buttons .nav-create:hover {
+  background-color: #f5f5f5; /* hover時に少しグレー */
+  border-color: #999;
 }

@@ -10,6 +10,7 @@
 
   <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
     @csrf
+    <input type="hidden" name="from" value="{{ $from }}">
 
     {{-- 画像プレビュー --}}
     <div class="profile-image-wrapper">

@@ -13,16 +13,16 @@ use Illuminate\Support\Facades\Session;
 
 class ProfileController extends Controller
 {
-    public function edit()
+    public function edit(Request $request)
     {
         $profile = Auth::user()->profile;
-        return view('profiles.edit', compact('profile'));
+        $from = $request->query('from', 'index'); // デフォルトは index に戻る
+        return view('profiles.edit', compact('profile', 'from'));
     }
 
     public function update(ProfileRequest $request)
     {
         $user = Auth::user();
-
         $data = $request->validated();
 
         // 画像アップロード
@@ -36,7 +36,13 @@ class ProfileController extends Controller
             $data
         );
 
-        return redirect()->route('products.index')->with('success', 'プロフィールを更新しました');
+        // 呼び出し元によってリダイレクト先を変える
+        if ($request->input('from') === 'profile') {
+            return redirect()->route('profile.show')->with('success', 'プロフィールを更新しました');
+        }
+
+        return redirect()->route('products.index')  // デフォルトは商品一覧
+            ->with('success', 'プロフィールを更新しました');
     }
 
     // 一時住所変更フォーム表示
@@ -76,6 +82,7 @@ class ProfileController extends Controller
     public function  profile()
     {
         $user = Auth::user();
+        $profile = $user->profile; // ★ プロフィールを取得
 
         // 出品した商品
         $myProducts = Product::where('seller_id', $user->id)->get();
@@ -87,7 +94,7 @@ class ProfileController extends Controller
                 ->where('user_id', $user->id);
         })->get();
 
-        return view('profiles.profile', compact('user', 'myProducts', 'purchasedProducts'));
+        // ★ $profile もビューに渡す
+        return view('profiles.profile', compact('user', 'profile', 'myProducts', 'purchasedProducts'));
     }
-
 }
