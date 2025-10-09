@@ -42,3 +42,4 @@ Route::post('/profile/update-temp', [ProfileController::class, 'updateTemp'])
 // Stripe 決済処理
 Route::post('/products/{product}/checkout', [TransactionController::class, 'checkout'])
     ->name('products.checkout');
+

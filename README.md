@@ -47,7 +47,7 @@ php artisan key:generate
 DB のテーブルを作成
 
 ```
-php artisan migrate
+php artisan migrate:fresh
 ```
 
 DB のテーブルにダミーデータを投入
@@ -81,20 +81,30 @@ nginx version: nginx/1.21.1
 
 ## URL
 
-商品一覧：http://localhost/products/
+商品一覧画面（トップ画面）：http://localhost/
 
-商品詳細：http://localhost/products/{productId}
+商品一覧画面（トップ画面）\_マイリスト：http://localhost/?tab=mylist
 
-商品登録：http://localhost/products/register
+会員登録画面：http://localhost/register
 
-特別商品一覧：http://localhost/products/sp/
+ログイン画面：http://localhost/login
 
-特別商品詳細：http://localhost/products/sp/{product}/
+商品詳細画面：http://localhost/products/{id}
 
-ログイン：http://localhost/login
+商品購入画面：http://localhost/products/{id}/purchase
+
+住所変更ページ：http://localhost/profile/edit-temp?product_id={id}
+
+商品出品画面：http://localhost/products/create
+
+プロフィール画面：http://localhost/profile
+
+プロフィール編集画面：http://localhost/profile/edit?from=profile
+
+プロフィール画面\_購入した商品一覧：http://localhost/profile
+
+プロフィール画面\_出品した商品一覧：http://localhost/profile
 
 ## ER 図
 
 ![ER図](ER.drawio.png)
-
-
