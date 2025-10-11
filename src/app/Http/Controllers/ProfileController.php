@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Session;
 
 class ProfileController extends Controller
 {
+
     public function edit(Request $request)
     {
         $profile = Auth::user()->profile;
@@ -25,12 +26,21 @@ class ProfileController extends Controller
         $user = Auth::user();
         $data = $request->validated();
 
-        // 画像アップロード
+        $profile = $user->profile; // 現在のプロフィールを取得
+
         if ($request->hasFile('user_image')) {
+            // ✅ 新しく画像をアップロードした場合
             $path = $request->file('user_image')->store('profiles', 'public');
             $data['user_image'] = $path;
+        } elseif (!$profile || is_null($profile->user_image)) {
+            // ✅ 画像未選択 ＆ DBに画像が登録されていない場合 → デフォルト画像を設定
+            $data['user_image'] = 'images/23_default-user.png';
+        } else {
+            // ✅ 画像未選択 ＆ DBに既に画像がある場合 → 何も変更しない
+            unset($data['user_image']);
         }
 
+        // updateOrCreate：既存なら更新、なければ新規作成
         $user->profile()->updateOrCreate(
             ['user_id' => $user->id],
             $data
@@ -41,9 +51,9 @@ class ProfileController extends Controller
             return redirect()->route('profile.show')->with('success', 'プロフィールを更新しました');
         }
 
-        return redirect()->route('products.index')  // デフォルトは商品一覧
-            ->with('success', 'プロフィールを更新しました');
+        return redirect()->route('products.index')->with('success', 'プロフィールを更新しました');
     }
+
 
     // 一時住所変更フォーム表示
     public function editTemp(Request $request)

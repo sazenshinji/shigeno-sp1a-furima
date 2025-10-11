@@ -8,34 +8,23 @@ use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Stripe\Stripe;
-use Stripe\PaymentIntent;
+use Stripe\Checkout\Session as StripeSession;
 
 class TransactionController extends Controller
 {
-    // 購入画面表示
+    // 🧾 購入画面
     public function create(Product $product)
     {
         $profile = Auth::user()->profile ?? null;
 
-        // Stripeのシークレットキー設定
-        Stripe::setApiKey(env('STRIPE_SECRET'));
-
-        // PaymentIntentを作成（カード決済の準備）
-        $intent = PaymentIntent::create([
-            'amount' => (int)$product->price, // JPYは整数
-            'currency' => 'jpy',
-            'payment_method_types' => ['card'],
-        ]);
-
         return view('transactions.purchase', [
-            'product'      => $product,
-            'profile'      => $profile,
-            'clientSecret' => $intent->client_secret, // フロントに渡す
+            'product' => $product,
+            'profile' => $profile,
         ]);
     }
 
-    // 購入処理（決済後に呼ばれる）
-    public function store(Request $request, Product $product)
+    // 💳 Stripe Checkoutにリダイレクト
+    public function checkout(Request $request, Product $product)
     {
         $request->validate([
             'payment_method' => 'required|in:1,2',
@@ -44,6 +33,7 @@ class TransactionController extends Controller
             'payment_method.in'       => '不正な支払い方法です。',
         ]);
 
+        // 配送先チェック
         $tempProfile = session('temp_profile');
         $profile = Auth::user()->profile ?? null;
 
@@ -51,31 +41,70 @@ class TransactionController extends Controller
         $address     = $tempProfile['address'] ?? ($profile->address ?? null);
         $building    = $tempProfile['building'] ?? ($profile->building ?? null);
 
-        // ✅ 配送先が未入力なら決済処理に入らない
         if (!$postal_code || !$address) {
-            return back()
-                ->withErrors(['address' => '送付先を入力してください'])
-                ->withInput();
+            return back()->withErrors(['address' => '送付先を入力してください'])->withInput();
         }
 
-        // Stripe秘密鍵をセット（両方の処理で必要）
         Stripe::setApiKey(env('STRIPE_SECRET'));
 
-        // --- 支払い処理 ---
-        if ($request->payment_method == 1) {
-            // ✅ コンビニ払い
-            $paymentIntent = PaymentIntent::create([
-                'amount' => (int)$product->price,
+        // ✅ 共通の支払いデータ
+        $commonLineItem = [[
+            'price_data' => [
                 'currency' => 'jpy',
-                'payment_method_types' => ['konbini'],
-            ]);
+                'product_data' => ['name' => $product->name],
+                'unit_amount' => (int)$product->price,
+            ],
+            'quantity' => 1,
+        ]];
 
-            // DB保存
+        // ✅ Stripe Checkoutセッション作成（カード or コンビニ）
+        if ($request->payment_method == 2) {
+            $paymentType = ['card'];
+        } elseif ($request->payment_method == 1) {
+            $paymentType = ['konbini'];
+        }
+
+        $session = StripeSession::create([
+            'payment_method_types' => $paymentType,
+            'line_items' => $commonLineItem,
+            'mode' => 'payment',
+            'success_url' => route('products.purchase.complete', ['product' => $product->id])
+                . '?session_id={CHECKOUT_SESSION_ID}&method=' . $request->payment_method,
+            'cancel_url' => route('products.purchase', ['product' => $product->id]),
+        ]);
+
+        return redirect($session->url);
+    }
+
+    // ✅ Stripe決済完了後（カード・コンビニ共通）
+    public function complete(Request $request, Product $product)
+    {
+        Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        $sessionId = $request->query('session_id');
+        $method = $request->query('method'); // 1:コンビニ, 2:カード
+
+        try {
+            $session = \Stripe\Checkout\Session::retrieve($sessionId);
+        } catch (\Exception $e) {
+            return redirect()->route('products.purchase', ['product' => $product->id])
+                ->withErrors(['payment' => '決済確認に失敗しました。']);
+        }
+
+        if ($session->payment_status === 'paid') {
+            $tempProfile = session('temp_profile');
+            $profile = Auth::user()->profile ?? null;
+
+            $postal_code = $tempProfile['postal_code'] ?? ($profile->postal_code ?? '');
+            $address     = $tempProfile['address'] ?? ($profile->address ?? '');
+            $building    = $tempProfile['building'] ?? ($profile->building ?? '');
+
+            // ✅ DB登録
             Transaction::create([
                 'product_id'     => $product->id,
                 'user_id'        => Auth::id(),
                 'datetime'       => Carbon::now(),
-                'payment_method' => $request->payment_method,
+                'payment_method' => $method,
                 'postal_code'    => $postal_code,
                 'address'        => $address,
                 'building'       => $building,
@@ -83,35 +112,16 @@ class TransactionController extends Controller
 
             session()->forget('temp_profile');
 
-            // コンビニ払い用の画面に遷移
-            return view('transactions.konbini', [
-                'paymentIntent' => $paymentIntent,
-                'product'       => $product,
-            ]);
-        }
-
-        if ($request->payment_method == 2) {
-            // ✅ カード払い
-            $paymentIntent = PaymentIntent::retrieve($request->payment_intent_id);
-
-            if ($paymentIntent->status === 'succeeded') {
-                Transaction::create([
-                    'product_id'     => $product->id,
-                    'user_id'        => Auth::id(),
-                    'datetime'       => Carbon::now(),
-                    'payment_method' => $request->payment_method,
-                    'postal_code'    => $postal_code,
-                    'address'        => $address,
-                    'building'       => $building,
-                ]);
-
-                session()->forget('temp_profile');
-
-                return redirect()->route('products.index')
-                    ->with('success', 'カード決済が完了しました！');
+            if ($method == 1) {
+                $msg = 'コンビニ支払いが完了しました！';
             } else {
-                return back()->withErrors(['payment' => 'カード決済に失敗しました。']);
+                $msg = 'カード決済が完了しました！';
             }
+
+            return redirect()->route('products.index')->with('success', $msg);
         }
+
+        return redirect()->route('products.purchase', ['product' => $product->id])
+            ->withErrors(['payment' => '決済が完了しませんでした。']);
     }
 }

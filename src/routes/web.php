@@ -10,8 +10,6 @@ use App\Http\Controllers\TransactionController;
 
 Route::get('/', [ProductController::class, 'index'])->name('products.index');
 
-
-
 Route::middleware(['auth'])->group(function () {
     Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
     Route::post('/products', [ProductController::class, 'store'])->name('products.store');
@@ -22,7 +20,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/products/{product}/like', [LikeController::class, 'toggle'])->name('products.like');
     Route::post('/products/{product}/comments', [CommentController::class, 'store'])->name('products.comments.store');
     Route::get('/products/{product}/purchase', [TransactionController::class, 'create'])->name('products.purchase');
-    Route::post('/products/{product}/purchase', [TransactionController::class, 'store'])->name('products.purchase.store');
+    Route::post('/products/{product}/checkout', [TransactionController::class, 'checkout'])->name('products.checkout');
+    Route::get('/products/{product}/purchase/complete', [TransactionController::class, 'complete'])
+        ->name('products.purchase.complete');
 
     Route::get('/profile', [ProfileController::class, 'profile'])->name('profile.show');
 });
@@ -33,13 +33,5 @@ Route::post('/register', [RegisterController::class, 'store'])
 
 Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
 
-Route::get('/profile/edit-temp', [ProfileController::class, 'editTemp'])
-    ->name('profile.edit_temp');
-
-Route::post('/profile/update-temp', [ProfileController::class, 'updateTemp'])
-    ->name('profile.update_temp');
-
-// Stripe 決済処理
-Route::post('/products/{product}/checkout', [TransactionController::class, 'checkout'])
-    ->name('products.checkout');
-
+Route::get('/profile/edit-temp', [ProfileController::class, 'editTemp'])->name('profile.edit_temp');
+Route::post('/profile/update-temp', [ProfileController::class, 'updateTemp'])->name('profile.update_temp');
