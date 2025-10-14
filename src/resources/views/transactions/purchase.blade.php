@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+
 <div class="purchase-container">
     <div class="purchase-left">
         {{-- 商品情報 --}}
@@ -59,8 +60,7 @@
             <p id="selected-method">選択してください</p>
         </div>
 
-        <button type="submit"
-            class="purchase-btn @if(!$displayProfile) disabled @endif">
+        <button type="submit" class="purchase-btn @if(!$displayProfile) disabled @endif">
             購入する
         </button>
 
@@ -74,4 +74,8 @@
         </form>
     </div>
 </div>
+
+{{-- ✅ Stripeの初期化スクリプトは不要 --}}
+<script src="{{ asset('js/purchase_script.js') }}"></script>
+
 @endsection

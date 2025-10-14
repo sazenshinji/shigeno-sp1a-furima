@@ -62,6 +62,17 @@ class TransactionController extends Controller
             $paymentType = ['card'];
         } elseif ($request->payment_method == 1) {
             $paymentType = ['konbini'];
+
+            // ✅（テスト用）購入ボタン押下時に即DB登録
+            Transaction::create([
+                'product_id'     => $product->id,
+                'user_id'        => Auth::id(),
+                'datetime'       => Carbon::now(),
+                'payment_method' => 1, // コンビニ払い
+                'postal_code'    => $postal_code,
+                'address'        => $address,
+                'building'       => $building,
+            ]);
         }
 
         $session = StripeSession::create([
