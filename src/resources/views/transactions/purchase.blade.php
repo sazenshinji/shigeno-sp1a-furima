@@ -21,7 +21,7 @@
 
         {{-- 支払い方法 --}}
         <h4>支払い方法</h4>
-        <form id="payment-form" action="{{ route('products.checkout', $product->id) }}" method="POST">
+        <form id="payment-form" action="{{ route('products.checkout', $product->id) }}" method="POST" novalidate>
             @csrf
             <select name="payment_method" class="payment-select" required>
                 <option value="">選択してください</option>
@@ -38,16 +38,20 @@
             </div>
 
             @php
-            $displayProfile = session('temp_profile', $profile);
+            $rawProfile = session('temp_profile', $profile);
+            $displayProfile = is_array($rawProfile)
+            ? $rawProfile
+            : $rawProfile->only(['postal_code', 'address', 'building']);
             @endphp
 
             @if ($displayProfile)
-            <p>〒 {{ $displayProfile['postal_code'] ?? $displayProfile->postal_code }}</p>
-            <p>{{ $displayProfile['address'] ?? $displayProfile->address }}</p>
-            <p>{{ $displayProfile['building'] ?? $displayProfile->building }}</p>
+            <p>〒 {{ $displayProfile['postal_code'] ?? '' }}</p>
+            <p>{{ $displayProfile['address'] ?? '' }}</p>
+            <p>{{ $displayProfile['building'] ?? '' }}</p>
             @else
             <p class="error-noaddress">住所の登録がありません。</p>
             @endif
+
     </div>
 
     <div class="purchase-right">

@@ -29,6 +29,9 @@
     <label for="building">建物名</label>
     <input type="text" id="building" name="building"
       value="{{ old('building', $tempProfile['building'] ?? '') }}">
+    @error('building')
+    <div class="error">{{ $message }}</div>
+    @enderror
 
     <button type="submit" class="update-btn">更新する</button>
   </form>

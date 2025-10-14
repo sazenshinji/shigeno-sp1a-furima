@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\UpdateAddressRequest;
 use App\Http\Requests\ProfileRequest;
+use App\Http\Requests\ProfileTempRequest;
 use App\Models\Profile;
 use App\Models\Product;
 use App\Models\Transaction;
@@ -51,7 +52,7 @@ class ProfileController extends Controller
             return redirect()->route('profile.show')->with('success', 'プロフィールを更新しました');
         }
 
-        return redirect()->route('products.index')->with('success', 'プロフィールを更新しました');
+        return redirect('http://localhost/?tab=mylist')->with('success', 'プロフィールを更新しました');
     }
 
 
@@ -74,7 +75,7 @@ class ProfileController extends Controller
     }
 
     // 一時住所更新処理
-    public function updateTemp(Request $request)
+    public function updateTemp(ProfileTempRequest $request)
     {
         $validated = $request->validate([
             'postal_code' => 'required|min:7|max:8',
