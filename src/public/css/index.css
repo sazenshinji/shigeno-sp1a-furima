@@ -46,6 +46,7 @@
   gap: 20px;
   margin: 20px 0;
   border-bottom: 2px solid #ddd;
+  padding-left: 100px; 
 }
 
 /* タブ共通 */
@@ -60,7 +61,6 @@
 /* 有効なタブ */
 .tab.active {
   color: red;
-  border-bottom: 2px solid red;
 }
 
 /* 無効（ログアウト時） */

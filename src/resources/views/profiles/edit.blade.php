@@ -12,7 +12,7 @@
     @csrf
     <input type="hidden" name="from" value="{{ $from }}">
 
-    {{-- 画像プレビューと画像選択ボタンを横並び --}}
+    {{-- 画像プレビューと画像選択ボタンを横並び（左揃え） --}}
     <div class="profile-image-container">
       <div class="profile-image-wrapper">
         {{-- 画像が未設定のときはグレーの丸を表示 --}}
@@ -34,38 +34,53 @@
     @error('user_image')
     <div class="error-message">{{ $message }}</div>
     @enderror
-    
 
-    <input type="text" name="username" placeholder="ユーザー名"
-      value="{{ old('username', $profile->username ?? '') }}">
-    @error('username')
-    <div class="error-message">{{ $message }}</div>
-    @enderror
 
-    <input type="text" name="postal_code" placeholder="郵便番号"
-      value="{{ old('postal_code', $profile->postal_code ?? '') }}">
-    @error('postal_code')
-    <div class="error-message">{{ $message }}</div>
-    @enderror
+    {{-- ユーザー名 --}}
+    <div class="form-group">
+      <label for="username">ユーザー名</label>
+      <input id="username" type="text" name="username"
+        value="{{ old('username', $profile->username ?? '') }}">
+      @error('username')
+      <div class="error-message">{{ $message }}</div>
+      @enderror
+    </div>
 
-    <input type="text" name="address" placeholder="住所"
-      value="{{ old('address', $profile->address ?? '') }}">
-    @error('address')
-    <div class="error-message">{{ $message }}</div>
-    @enderror
+    {{-- 郵便番号 --}}
+    <div class="form-group">
+      <label for="postal_code">郵便番号</label>
+      <input id="postal_code" type="text" name="postal_code"
+        value="{{ old('postal_code', $profile->postal_code ?? '') }}">
+      @error('postal_code')
+      <div class="error-message">{{ $message }}</div>
+      @enderror
+    </div>
 
-    <input type="text" name="building" placeholder="建物名"
-      value="{{ old('building', $profile->building ?? '') }}">
-    @error('building')
-    <div class="error-message">{{ $message }}</div>
-    @enderror
+    {{-- 住所 --}}
+    <div class="form-group">
+      <label for="address">住所</label>
+      <input id="address" type="text" name="address"
+        value="{{ old('address', $profile->address ?? '') }}">
+      @error('address')
+      <div class="error-message">{{ $message }}</div>
+      @enderror
+    </div>
 
+    {{-- 建物名 --}}
+    <div class="form-group building-group">
+      <label for="building">建物名</label>
+      <input id="building" type="text" name="building"
+        value="{{ old('building', $profile->building ?? '') }}">
+      @error('building')
+      <div class="error-message">{{ $message }}</div>
+      @enderror
+    </div>
+
+    {{-- 更新ボタン --}}
     <button type="submit">更新する</button>
   </form>
-
 </div>
 
-<!-- Loading script for image confirmation -->
 <script src="{{ asset('js/update_img_script.js') }}"></script>
 
 @endsection

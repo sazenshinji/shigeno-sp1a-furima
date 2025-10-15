@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app_login')
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/login.css') }}">
@@ -11,15 +11,19 @@
   <form method="POST" action="{{ route('login') }}" novalidate>
     @csrf
 
-    <div>
-      <input type="email" name="email" placeholder="メールアドレス" value="{{ old('email') }}">
+    {{-- メールアドレス --}}
+    <div class="form-group">
+      <label for="email">メールアドレス</label>
+      <input id="email" type="email" name="email" value="{{ old('email') }}">
       @error('email')
       <div class="error">{{ $message }}</div>
       @enderror
     </div>
 
-    <div>
-      <input type="password" name="password" placeholder="パスワード">
+    {{-- パスワード --}}
+    <div class="form-group">
+      <label for="password">パスワード</label>
+      <input id="password" type="password" name="password">
       @error('password')
       <div class="error">{{ $message }}</div>
       @enderror
@@ -30,5 +34,4 @@
 
   <a href="{{ route('register') }}">会員登録はこちら</a>
 </div>
-
 @endsection

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app_login')
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/register.css') }}">
@@ -10,25 +10,41 @@
   <form method="POST" action="{{ route('register') }}" novalidate>
     @csrf
 
-    <input type="text" name="name" placeholder="ユーザー名" value="{{ old('name') }}">
-    @error('name')
-    <div class="error">{{ $message }}</div>
-    @enderror
+    {{-- ユーザー名 --}}
+    <div class="form-group">
+      <label for="name">ユーザー名</label>
+      <input id="name" type="text" name="name" value="{{ old('name') }}">
+      @error('name')
+      <div class="error">{{ $message }}</div>
+      @enderror
+    </div>
 
-    <input type="email" name="email" placeholder="メールアドレス" value="{{ old('email') }}">
-    @error('email')
-    <div class="error">{{ $message }}</div>
-    @enderror
+    {{-- メールアドレス --}}
+    <div class="form-group">
+      <label for="email">メールアドレス</label>
+      <input id="email" type="email" name="email" value="{{ old('email') }}">
+      @error('email')
+      <div class="error">{{ $message }}</div>
+      @enderror
+    </div>
 
-    <input type="password" name="password" placeholder="パスワード">
-    @error('password')
-    <div class="error">{{ $message }}</div>
-    @enderror
+    {{-- パスワード --}}
+    <div class="form-group">
+      <label for="password">パスワード</label>
+      <input id="password" type="password" name="password">
+      @error('password')
+      <div class="error">{{ $message }}</div>
+      @enderror
+    </div>
 
-    <input type="password" name="password_confirmation" placeholder="確認用パスワード">
-    @error('password_confirmation')
-    <div class="error">{{ $message }}</div>
-    @enderror
+    {{-- 確認用パスワード --}}
+    <div class="form-group">
+      <label for="password_confirmation">確認用パスワード</label>
+      <input id="password_confirmation" type="password" name="password_confirmation">
+      @error('password_confirmation')
+      <div class="error">{{ $message }}</div>
+      @enderror
+    </div>
 
     <button type="submit">登録する</button>
   </form>

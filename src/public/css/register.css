@@ -1,16 +1,67 @@
 .auth-container {
-    width: 300px;
-    margin: 50px auto;
-    text-align: center;
-}
-.auth-container input, 
-.auth-container button {
-    display: block;
-    width: 100%;
-    margin: 10px 0;
-    padding: 8px;
+  width: 300px;
+  margin: 50px auto;
+  text-align: center;
 }
 
+.auth-container h2 {
+  margin-bottom: 20px;
+}
+
+/* 各入力ブロック */
+.form-group {
+  text-align: left;      /* ← ラベルを左寄せ */
+  margin-bottom: 15px;
+}
+
+/* ラベル文字（黒文字） */
+.form-group label {
+  display: block;
+  font-weight: bold;
+  color: #000;           /* ← 黒文字 */
+  margin-bottom: 5px;    /* ← 入力欄との間に少し余白 */
+}
+
+/* 入力ボックス */
+.auth-container input {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  margin-bottom: 5px;
+}
+
+/* 登録ボタン */
+.auth-container button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 55px;
+  background-color: #e60000; /* 赤地 */
+  color: #fff;               /* 白文字 */
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.auth-container button:hover {
+  background-color: #cc0000;
+}
+
+/* ログインリンク */
+.auth-container a {
+  display: inline-block;
+  margin-top: 20px;
+  color: #007bff; /* 青文字 */
+  text-decoration: none;
+}
+.auth-container a:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+/* エラーメッセージ */
 .error {
   color: red;
   font-size: 13px;
