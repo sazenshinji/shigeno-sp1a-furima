@@ -14,11 +14,14 @@
       @endif
     </div>
   </div>
-  
+
   <div class="product-detail-right">
     <h2>{{ $product->name }}</h2>
     <p class="brand">{{ $product->brand }}</p>
-    <p class="price">￥{{ number_format($product->price) }} <span>(税込)</span></p>
+    <p class="price">
+      ￥{{ number_format($product->price) }}
+      <span class="tax-text">(税込)</span>
+    </p>
 
     <div class="icons">
       <div class="icon-row">
@@ -43,9 +46,14 @@
     </div>
 
     @if ($product->is_sold)
-    <button class="purchase-btn disabled" disabled>購入済み</button>
+      <button class="purchase-btn disabled" disabled>購入済み</button>
     @else
-    <a href="{{ route('products.purchase', $product->id) }}" class="purchase-btn">購入手続きへ</a>
+      <a href="{{ route('products.purchase', $product->id) }}" class="purchase-btn">購入手続きへ</a>
+
+      {{-- 🔽 未ログインエラーメッセージ表示 --}}
+      @if (session('login_required'))
+        <p class="error-message">{{ session('login_required') }}</p>
+      @endif
     @endif
 
     <h3>商品説明</h3>
@@ -86,7 +94,7 @@
     <h3>商品へのコメント</h3>
     <form action="{{ route('products.comments.store', $product->id) }}" method="POST">
       @csrf
-      <textarea name="comment" rows="3" class="comment-textarea" placeholder="コメントを入力してください">{{ old('comment') }}</textarea>
+      <textarea name="comment" rows="3" class="comment-textarea">{{ old('comment') }}</textarea>
       @error('comment')
       <div class="error">{{ $message }}</div>
       @enderror

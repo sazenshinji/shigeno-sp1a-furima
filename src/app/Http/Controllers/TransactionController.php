@@ -15,12 +15,19 @@ class TransactionController extends Controller
     // 🧾 購入画面
     public function create(Product $product)
     {
+        // ログインしていない場合はエラーメッセージ付きで商品詳細に戻す
+        if (!Auth::check()) {
+            return redirect()->route('products.show', $product->id)
+                ->with('login_required', '購入するにはログインが必要です');
+        }
+
         $profile = Auth::user()->profile ?? null;
 
         return view('transactions.purchase', [
             'product' => $product,
             'profile' => $profile,
         ]);
+
     }
 
     // 💳 Stripe Checkoutにリダイレクト

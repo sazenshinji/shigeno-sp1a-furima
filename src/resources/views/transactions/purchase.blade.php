@@ -44,13 +44,18 @@
             : $rawProfile->only(['postal_code', 'address', 'building']);
             @endphp
 
-            @if ($displayProfile)
-            <p>〒 {{ $displayProfile['postal_code'] ?? '' }}</p>
-            <p>{{ $displayProfile['address'] ?? '' }}</p>
-            <p>{{ $displayProfile['building'] ?? '' }}</p>
-            @else
-            <p class="error-noaddress">住所の登録がありません。</p>
-            @endif
+            <div class="address-display">
+                @if ($displayProfile)
+                <p>〒 {{ $displayProfile['postal_code'] ?? '' }}</p>
+                <p>{{ $displayProfile['address'] ?? '' }}</p>
+                <p>{{ $displayProfile['building'] ?? '' }}</p>
+                @else
+                <p class="error-noaddress">住所の登録がありません。</p>
+                @endif
+            </div>
+
+
+            <hr>
 
     </div>
 
@@ -68,6 +73,8 @@
             購入する
         </button>
 
+        </form>
+
         {{-- エラーメッセージ --}}
         @error('payment_method')
         <div class="error">{{ $message }}</div>
@@ -75,7 +82,6 @@
         @error('address')
         <div class="error">{{ $message }}</div>
         @enderror
-        </form>
     </div>
 </div>
 

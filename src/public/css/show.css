@@ -14,7 +14,7 @@
 }
 
 .detail-image {
-  width: 100%;
+  width: 85%;
   border: 1px solid #ddd;
   border-radius: 8px;
 }
@@ -23,12 +23,36 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+}
+
+.product-detail-right h2 {
+  margin-bottom: 0px; /* 商品名とブランドの間を詰める */
+}
+
+.product-detail-right h3 {
+  margin-bottom: 5px; /* ← 通常より小さく（10〜20pxが標準） */
+}
+
+
+
+.product-detail-right .brand {
+  margin-top: 0;
+  margin-bottom: 1px; /* ブランドと価格の間を詰める */
+}
+
+.product-detail-right .price {
+  margin-bottom: 3px; /* 価格とアイコンの間を詰める */
 }
 
 .price {
   font-size: 20px;
   font-weight: bold;
+}
+.price .tax-text {
+  font-size: 14px;   /* ← 通常より少し小さく */
+  color: #666;       /* ← グレー気味に（任意） */
+  margin-left: 4px;  /* ← 価格との間に少し隙間 */
+  vertical-align: baseline; /* ← 行の高さを自然に合わせる */
 }
 
 .icons {
@@ -37,6 +61,7 @@
   align-items: flex-start;
   gap: 6px;
   margin: 10px 0;
+  margin-left: 15px;
 }
 
 .icon-row {
@@ -59,6 +84,7 @@
 
 .purchase-btn,
 .comment-submit-btn {
+  margin-top: 15px;
   background-color: #ff5555;
   color: white;
   padding: 12px;
@@ -74,8 +100,12 @@
 .purchase-btn:hover {
   background-color: #e53935;
 }
+.comment-submit-btn:hover {
+  background-color: #e53935;
+}
 
 .description {
+  margin-top: 0;
   line-height: 1.6;
 }
 
@@ -92,7 +122,7 @@
 }
 
 .product-info {
-  margin-top: 15px;
+  margin-top: 0px;
   font-size: 14px;
   color: #333;
 }
@@ -113,8 +143,7 @@
 }
 
 .comments {
-  margin-top: 20px;
-  border-top: 1px solid #ddd;
+  margin-top: 5px;
   padding-top: 10px;
 }
 
@@ -157,13 +186,16 @@
   border: 1px solid #ccc;
   border-radius: 6px;
   resize: vertical;
-}
-
-.comment-submit-btn:hover {
-  background-color: #e53935;
+  height: 150px;
 }
 
 .error {
   color: red;
   font-size: 13px;
+}
+
+.error-message {
+  color: red;
+  margin-top: 8px;
+  font-weight: bold;
 }

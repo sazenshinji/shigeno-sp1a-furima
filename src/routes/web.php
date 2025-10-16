@@ -19,13 +19,15 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/products/{product}/like', [LikeController::class, 'toggle'])->name('products.like');
     Route::post('/products/{product}/comments', [CommentController::class, 'store'])->name('products.comments.store');
-    Route::get('/products/{product}/purchase', [TransactionController::class, 'create'])->name('products.purchase');
+
     Route::post('/products/{product}/checkout', [TransactionController::class, 'checkout'])->name('products.checkout');
     Route::get('/products/{product}/purchase/complete', [TransactionController::class, 'complete'])
         ->name('products.purchase.complete');
 
     Route::get('/profile', [ProfileController::class, 'profile'])->name('profile.show');
 });
+
+Route::get('/products/{product}/purchase', [TransactionController::class, 'create'])->name('products.purchase');
 
 Route::post('/register', [RegisterController::class, 'store'])
     ->middleware('guest')
