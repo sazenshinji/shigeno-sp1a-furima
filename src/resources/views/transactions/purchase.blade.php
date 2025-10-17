@@ -38,10 +38,19 @@
             </div>
 
             @php
-            $rawProfile = session('temp_profile', $profile);
-            $displayProfile = is_array($rawProfile)
-            ? $rawProfile
-            : $rawProfile->only(['postal_code', 'address', 'building']);
+            // セッションに一時プロフィールがあればそれを優先
+            $rawProfile = session('temp_profile') ?? $profile;
+
+            // 表示用データ整形
+            if (is_array($rawProfile)) {
+            $displayProfile = $rawProfile;
+            } elseif ($rawProfile) {
+            // Profileモデルが存在する場合のみ only() 呼び出し
+            $displayProfile = $rawProfile->only(['postal_code', 'address', 'building']);
+            } else {
+            // どちらも存在しない場合
+            $displayProfile = null;
+            }
             @endphp
 
             <div class="address-display">
@@ -53,7 +62,6 @@
                 <p class="error-noaddress">住所の登録がありません。</p>
                 @endif
             </div>
-
 
             <hr>
 

@@ -68,7 +68,7 @@ body {
     padding: 0 40px;
 }
 .product-card {
-    width: 200px; /* カードの横幅 */
+    width: 300px; /* カードの横幅 */
     border-radius: 8px; /* 角を少し丸める */
     padding: 10px;
     background-color: #fff; /* 背景を白で統一 */
