@@ -22,7 +22,7 @@
 
     {{-- パスワード --}}
     <div class="form-group">
-      <label for="password">パスワード</label>
+      <label for="email">パスワード</label>
       <input id="password" type="password" name="password">
       @error('password')
       <div class="error">{{ $message }}</div>

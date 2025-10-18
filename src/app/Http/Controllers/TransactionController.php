@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\PurchaseRequest;
 use App\Models\Product;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
@@ -27,30 +28,11 @@ class TransactionController extends Controller
             'product' => $product,
             'profile' => $profile,
         ]);
-
     }
 
     // 💳 Stripe Checkoutにリダイレクト
-    public function checkout(Request $request, Product $product)
+    public function checkout(PurchaseRequest $request, Product $product)
     {
-        $request->validate([
-            'payment_method' => 'required|in:1,2',
-        ], [
-            'payment_method.required' => '支払い方法を選択してください。',
-            'payment_method.in'       => '不正な支払い方法です。',
-        ]);
-
-        // 配送先チェック
-        $tempProfile = session('temp_profile');
-        $profile = Auth::user()->profile ?? null;
-
-        $postal_code = $tempProfile['postal_code'] ?? ($profile->postal_code ?? null);
-        $address     = $tempProfile['address'] ?? ($profile->address ?? null);
-        $building    = $tempProfile['building'] ?? ($profile->building ?? null);
-
-        if (!$postal_code || !$address) {
-            return back()->withErrors(['address' => '送付先を入力してください'])->withInput();
-        }
 
         Stripe::setApiKey(env('STRIPE_SECRET'));
 
@@ -63,6 +45,11 @@ class TransactionController extends Controller
             ],
             'quantity' => 1,
         ]];
+
+        // ✅ リクエストから配送情報を取得
+        $postal_code = $request->input('postal_code');
+        $address     = $request->input('address');
+        $building    = $request->input('building');
 
         // ✅ Stripe Checkoutセッション作成（カード or コンビニ）
         if ($request->payment_method == 2) {

@@ -11,12 +11,25 @@
 
 .detail-images {
   position: relative;
+  display: flex;
+  justify-content: center;
 }
 
 .detail-image {
-  width: 85%;
+  width: 85%; /* 変更しなくてもOK */
   border: 1px solid #ddd;
   border-radius: 8px;
+}
+
+.product-sold-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  height: auto;
+  opacity: 0.9;
+  pointer-events: none;
 }
 
 .product-detail-right {

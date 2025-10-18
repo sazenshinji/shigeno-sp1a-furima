@@ -23,13 +23,16 @@ body {
     display: flex;
     align-items: center;
     margin-left: 20px;
+    width: 25%;
+    min-width: 100px;
+    max-width: 500px;
 }
 
 .search-box input[type="text"] {
+    flex: 1;
     padding: 6px 10px;
     border: 1px solid #ccc;
     border-radius: 4px 0 0 4px;
-    width: 400px;
 }
 
 .search-box button {
@@ -63,14 +66,14 @@ body {
 .product-grid {
     display: flex;
     flex-wrap: wrap; /* 複数行に折り返す */
-    gap: 20px; /* カード同士の隙間 */
+    gap: 40px; /* カード同士の隙間 */
     justify-content: flex-start;
     padding: 0 40px;
 }
 .product-card {
-    width: 300px; /* カードの横幅 */
+    width: 290px; /* カードの横幅 */
     border-radius: 8px; /* 角を少し丸める */
-    padding: 10px;
+    padding: 0px;
     background-color: #fff; /* 背景を白で統一 */
     text-align: center;
     transition: transform 0.2s, box-shadow 0.2s;
@@ -92,8 +95,8 @@ body {
     color: #333;
 }
 .product-card a {
-  text-decoration: none;
-  color: inherit;  /* ← リンクの色を親要素に合わせる（自然な見た目に） */
+    text-decoration: none;
+    color: inherit; /* ← リンクの色を親要素に合わせる（自然な見た目に） */
 }
 
 /* ログイン/ログアウトとマイページのリンクだけ白文字に */

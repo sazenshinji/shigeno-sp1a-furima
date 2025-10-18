@@ -41,8 +41,6 @@
     color: #fff;
 }
 
-
-
 /* 商品カードの共通スタイル */
 /* タブ部分 */
 .tabs {
@@ -78,8 +76,6 @@
     margin: 0 0 20px; /* 下に余白 */
 }
 
-
-
 .tab-content {
     display: none;
 }
@@ -95,12 +91,3 @@
     font-size: 16px;
     margin: 20px 0;
 }
-
-/* 商品カード */
-.product-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: flex-start;
-}
-

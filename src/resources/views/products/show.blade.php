@@ -46,14 +46,14 @@
     </div>
 
     @if ($product->is_sold)
-      <button class="purchase-btn disabled" disabled>購入済み</button>
+    <button class="purchase-btn disabled" disabled>購入済み</button>
     @else
-      <a href="{{ route('products.purchase', $product->id) }}" class="purchase-btn">購入手続きへ</a>
+    <a href="{{ route('products.purchase', $product->id) }}" class="purchase-btn">購入手続きへ</a>
 
-      {{-- 🔽 未ログインエラーメッセージ表示 --}}
-      @if (session('login_required'))
-        <p class="error-message">{{ session('login_required') }}</p>
-      @endif
+    {{-- 🔽 未ログインエラーメッセージ表示 --}}
+    @if (session('login_required'))
+    <p class="error-message">{{ session('login_required') }}</p>
+    @endif
     @endif
 
     <h3>商品説明</h3>

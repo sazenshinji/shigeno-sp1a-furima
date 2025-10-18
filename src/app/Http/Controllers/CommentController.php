@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 
-use App\Http\Requests\StoreCommentRequest;
+use App\Http\Requests\CommentRequest;
 use App\Models\Product;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
@@ -11,7 +11,7 @@ use Carbon\Carbon;
 
 class CommentController extends Controller
 {
-    public function store(StoreCommentRequest $request, Product $product)
+    public function store(CommentRequest $request, Product $product)
     {
         Comment::create([
             'product_id' => $product->id,

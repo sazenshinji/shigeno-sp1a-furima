@@ -61,6 +61,11 @@
                 @else
                 <p class="error-noaddress">住所の登録がありません。</p>
                 @endif
+
+                <input type="hidden" name="postal_code" value="{{ $displayProfile['postal_code'] ?? '' }}">
+                <input type="hidden" name="address" value="{{ $displayProfile['address'] ?? ''}}">
+                <input type="hidden" name="building" value="{{ $displayProfile['building'] ?? '' }}">
+
             </div>
 
             <hr>
@@ -77,11 +82,12 @@
             <p id="selected-method">選択してください</p>
         </div>
 
-        <button type="submit" class="purchase-btn @if(!$displayProfile) disabled @endif">
+        <button type="submit" class="purchase-btn">
             購入する
         </button>
 
         </form>
+
 
         {{-- エラーメッセージ --}}
         @error('payment_method')
@@ -90,6 +96,7 @@
         @error('address')
         <div class="error">{{ $message }}</div>
         @enderror
+
     </div>
 </div>
 
