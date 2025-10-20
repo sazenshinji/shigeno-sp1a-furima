@@ -19,7 +19,10 @@
         <p id="image-placeholder">画像を選択する</p>
         <img id="preview" src="" alt="" style="display:none;">
       </div>
-      <input type="file" name="image" id="image" accept="image/*" style="display:none;" required>
+      <input type="file" name="image" id="image" accept="image/*" style="display:none;">
+      @error('image')
+      <div class="error-message">{{ $message }}</div>
+      @enderror
     </div>
 
     {{-- 商品の詳細 --}}
@@ -32,21 +35,31 @@
       <div class="category-list">
         @foreach($categories as $category)
         <label class="category-tag">
-          <input type="checkbox" name="categories[]" value="{{ $category->id }}">
+          <input type="checkbox" name="categories[]" value="{{ $category->id }}"
+            {{ is_array(old('categories')) && in_array($category->id, old('categories')) ? 'checked' : '' }}>
           <span>{{ $category->name }}</span>
         </label>
         @endforeach
+        @error('categories')
+        <div class="error-message">{{ $message }}</div>
+        @enderror
       </div>
 
       {{-- コンディション --}}
       <div class="condition-section">
         <label>商品の状態</label>
-        <select name="condition_id" required class="condition-select">
+        <select name="condition_id" class="condition-select">
           <option value="">選択してください</option>
           @foreach($conditions as $condition)
-          <option value="{{ $condition->id }}">{{ $condition->name }}</option>
+          <option value="{{ $condition->id }}"
+            {{ old('condition_id') == $condition->id ? 'selected' : '' }}>
+            {{ $condition->name }}
+          </option>
           @endforeach
         </select>
+        @error('condition_id')
+        <div class="error-message">{{ $message }}</div>
+        @enderror
       </div>
 
       {{-- 商品名・説明エリア --}}
@@ -55,20 +68,29 @@
         <hr>
 
         <label>商品名</label>
-        <input type="text" name="name" required>
+        <input type="text" name="name" value="{{ old('name') }}">
+        @error('name')
+        <div class="error-message">{{ $message }}</div>
+        @enderror
 
         <label>ブランド名</label>
-        <input type="text" name="brand">
+        <input type="text" name="brand" value="{{ old('brand') }}">
 
         <label>商品の説明</label>
-        <textarea name="description" rows="3" required></textarea>
+        <textarea name="description" rows="3">{{ old('description') }}</textarea>
+        @error('description')
+        <div class="error-message">{{ $message }}</div>
+        @enderror
 
         {{-- 販売価格 --}}
         <label>販売価格</label>
         <div class="price-input-wrapper">
           <span class="yen-symbol">￥</span>
-          <input type="number" name="price" required>
+          <input type="number" name="price" value="{{ old('price') }}">
         </div>
+        @error('price')
+        <div class="error-message">{{ $message }}</div>
+        @enderror
 
       </div>
 

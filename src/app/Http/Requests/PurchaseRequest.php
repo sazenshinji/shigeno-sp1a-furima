@@ -31,9 +31,9 @@ class PurchaseRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'payment_method.required' => '支払い方法を選択してください。',
-            'payment_method.in'       => '不正な支払い方法です。',
-            'address.required'     => '配送先の住所を登録してください。',
+            'payment_method.required' => '支払い方法を選択してください',
+            'payment_method.in'       => '不正な支払い方法です',
+            'address.required'     => '配送先の住所を入力してください',
         ];
     }
 }

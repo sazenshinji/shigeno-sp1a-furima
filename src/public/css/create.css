@@ -210,3 +210,11 @@ textarea {
 .submit-btn:hover {
     background: darkred;
 }
+
+/* ==============================
+   エラーメッセージ
+============================== */
+.error-message {
+  color: red;
+  font-size: 13px;
+}

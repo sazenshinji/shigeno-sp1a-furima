@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-// FortifyのLoginRequestをエイリアス付きで読み込む
 use Laravel\Fortify\Http\Requests\LoginRequest as FortifyLoginRequest;
 
 class LoginRequest extends FortifyLoginRequest

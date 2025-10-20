@@ -27,12 +27,12 @@ class ProfileRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'user_image.image' => '画像ファイルを選択してください',
-            'user_image.mimes:png,jpeg' => '「.png」または「.jpeg」形式でアップロードしてください',
+            'user_image.image' => '画像ファイルを入力してください',
+            'user_image.mimes' => '「.png」または「.jpeg」形式でアップロードしてください',
             'username.required' => 'お名前を入力してください',
             'username.max' => '20文字以内で入力してください',
             'postal_code.required' => '郵便番号を入力してください',
-            'postal_code.regex' => '「3文字-4文字」で入力してください',
+            'postal_code.regex' => '「数字3桁-数字4桁」で入力してください',
             'address.required' => '住所を入力してください',
             'address.max' => '40文字以内で入力してください',
             'building.max' => '20文字以内で入力してください',
