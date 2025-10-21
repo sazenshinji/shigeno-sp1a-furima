@@ -69,7 +69,7 @@ chmod -R 777 storage
 php artisan storage:link
 ```
 
-Stripe 決済 カード支払時の入力情報(例)：3分後に決済が成功します。
+Stripe 決済 カード支払時の入力情報(例)：3 分後に決済が成功します。
 　・メールアドレス：test@example.com
 　・カード情報：4242 4242 4242 4242 将来の日付 任意の 3 桁
 　・カード名義：Stripe Test
@@ -79,8 +79,9 @@ Stripe 決済 コンビニ払い時の入力情報(例)：即時に決済が成�
 　・カード名義：Stripe Test
 　・電話番号：(未入力)
 
-
-
+PHPUnit テストの実行方法。
+　・PHP コンテナー無い
+　　 php artisan test
 
 ## 使用技術(実行環境)
 

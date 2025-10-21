@@ -25,7 +25,7 @@ class LikesTableSeeder extends Seeder
         ];
         DB::table('likes')->insert($param);
         $param = [
-            'product_id' => 2,
+            'product_id' => 5,
             'user_id' => 2,
             'created_at' => Carbon::create(2025, 9, 23, 12, 57, 0),
             'updated_at' => Carbon::create(2025, 9, 23, 12, 57, 0),
