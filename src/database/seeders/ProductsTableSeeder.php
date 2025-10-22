@@ -51,7 +51,7 @@ class ProductsTableSeeder extends Seeder
             'condition_id' => 4,
             'price' => 4000,
             'image_path' => 'images/04_革靴.jpg',
-            'brand' => '　',
+            'brand' => 'X靴製作所',
             'description' => 'クラシックなデザインの革靴',
             'seller_id' => 2,
             'created_at' => Carbon::create(2025, 9, 23, 12, 57, 0),

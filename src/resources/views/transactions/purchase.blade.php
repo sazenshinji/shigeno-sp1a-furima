@@ -100,7 +100,7 @@
     </div>
 </div>
 
-{{-- ✅ Stripeの初期化スクリプトは不要 --}}
+{{-- Stripeの初期化スクリプトは不要 --}}
 <script src="{{ asset('js/purchase_script.js') }}"></script>
 
 @endsection
