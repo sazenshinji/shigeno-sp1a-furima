@@ -25,6 +25,9 @@ Route::middleware(['auth'])->group(function () {
         ->name('products.purchase.complete');
 
     Route::get('/profile', [ProfileController::class, 'profile'])->name('profile.show');
+
+    Route::post('/products/{product}/purchase/method', [TransactionController::class, 'selectPaymentMethod'])
+        ->name('products.purchase.method');
 });
 
 Route::get('/products/{product}/purchase', [TransactionController::class, 'create'])->name('products.purchase');

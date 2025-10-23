@@ -13,10 +13,9 @@ use Stripe\Checkout\Session as StripeSession;
 
 class TransactionController extends Controller
 {
-    // 🧾 購入画面
+    // 購入画面
     public function create(Product $product)
     {
-        // ログインしていない場合はエラーメッセージ付きで商品詳細に戻す
         if (!Auth::check()) {
             return redirect()->route('products.show', $product->id)
                 ->with('login_required', '購入するにはログインが必要です');
@@ -24,19 +23,33 @@ class TransactionController extends Controller
 
         $profile = Auth::user()->profile ?? null;
 
+        // セッションに保存されている支払い方法（直前の選択を保持）
+        $selectedMethod = session('selected_payment_method', null);
+
         return view('transactions.purchase', [
             'product' => $product,
             'profile' => $profile,
+            'selectedMethod' => $selectedMethod,
         ]);
     }
 
-    // 💳 Stripe Checkoutにリダイレクト
+    // 支払い方法選択時に呼ばれる
+    public function selectPaymentMethod(Request $request, Product $product)
+    {
+        $method = $request->input('payment_method');
+
+        // セッションに保存
+        session(['selected_payment_method' => $method]);
+
+        // 同じ購入画面へリダイレクト
+        return redirect()->route('products.purchase', ['product' => $product->id]);
+    }
+
+    // Stripe Checkoutにリダイレクト
     public function checkout(PurchaseRequest $request, Product $product)
     {
-
         Stripe::setApiKey(env('STRIPE_SECRET'));
 
-        // ✅ 共通の支払いデータ
         $commonLineItem = [[
             'price_data' => [
                 'currency' => 'jpy',
@@ -46,42 +59,52 @@ class TransactionController extends Controller
             'quantity' => 1,
         ]];
 
-        // ✅ リクエストから配送情報を取得
         $postal_code = $request->input('postal_code');
         $address     = $request->input('address');
         $building    = $request->input('building');
 
-        // ✅ Stripe Checkoutセッション作成（カード or コンビニ）
-        if ($request->payment_method == 2) {
-            $paymentType = ['card'];
-        } elseif ($request->payment_method == 1) {
+        // 支払い方法ごとの設定
+        if ($request->payment_method == 1) {
+            // ✅ コンビニ払い
             $paymentType = ['konbini'];
+            $method = 1;
 
-            // ✅（テスト用）購入ボタン押下時に即DB登録
+            /**
+             * ✅ テスト用：Stripe画面に行く前にDB登録
+             * 　本来は決済後に complete() で登録するが、テスト時はここで登録しておく
+             */
             Transaction::create([
                 'product_id'     => $product->id,
                 'user_id'        => Auth::id(),
                 'datetime'       => Carbon::now(),
-                'payment_method' => 1, // コンビニ払い
+                'payment_method' => 1,
                 'postal_code'    => $postal_code,
                 'address'        => $address,
                 'building'       => $building,
             ]);
+        } elseif ($request->payment_method == 2) {
+            // ✅ カード払い
+            $paymentType = ['card'];
+            $method = 2;
+        } else {
+            return back()->withErrors(['payment_method' => '支払い方法を選択してください']);
         }
 
+        // ✅ Stripeセッション作成（カード・コンビニ共通）
         $session = StripeSession::create([
             'payment_method_types' => $paymentType,
             'line_items' => $commonLineItem,
             'mode' => 'payment',
             'success_url' => route('products.purchase.complete', ['product' => $product->id])
-                . '?session_id={CHECKOUT_SESSION_ID}&method=' . $request->payment_method,
+                . '?session_id={CHECKOUT_SESSION_ID}&method=' . $method,
             'cancel_url' => route('products.purchase', ['product' => $product->id]),
         ]);
 
-        return redirect($session->url);
+        // ✅ JSONで返す（カード・コンビニ共通）
+        return response()->json(['url' => $session->url]);
     }
 
-    // ✅ Stripe決済完了後（カード・コンビニ共通）
+    // Stripe決済完了後（カード・コンビニ共通）
     public function complete(Request $request, Product $product)
     {
         Stripe::setApiKey(env('STRIPE_SECRET'));
@@ -104,7 +127,7 @@ class TransactionController extends Controller
             $address     = $tempProfile['address'] ?? ($profile->address ?? '');
             $building    = $tempProfile['building'] ?? ($profile->building ?? '');
 
-            // ✅ DB登録
+            // DB登録
             Transaction::create([
                 'product_id'     => $product->id,
                 'user_id'        => Auth::id(),
