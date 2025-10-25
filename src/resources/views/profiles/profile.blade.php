@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+
 <div class="profile-header">
   {{-- プロフ画像 --}}
   <img src="{{ asset('storage/' . ($user->profile->user_image ?? 'images/23_default-user.png')) }}"
@@ -20,14 +21,18 @@
 
 {{-- タブ切り替え --}}
 <div class="tabs">
-  <button class="tab-link active" data-tab="sell">出品した商品</button>
-  <button class="tab-link" data-tab="buy">購入した商品</button>
+  <a href="{{ route('profile.show', ['tab' => 'sell']) }}"
+    class="tab-link {{ $activeTab === 'sell' ? 'active' : '' }}">出品した商品</a>
+
+  <a href="{{ route('profile.show', ['tab' => 'buy']) }}"
+    class="tab-link {{ $activeTab === 'buy' ? 'active' : '' }}">購入した商品</a>
 </div>
 
-<hr class="tab-divider"><!-- 横線追加 -->
+<hr class="tab-divider"><!-- 横線 -->
 
 {{-- 出品した商品 --}}
-<div id="sell" class="tab-content active">
+@if ($activeTab === 'sell')
+<div class="tab-content active">
   <div class="product-grid">
     @forelse ($myProducts as $product)
     <div class="product-card">
@@ -41,9 +46,11 @@
     @endforelse
   </div>
 </div>
+@endif
 
 {{-- 購入した商品 --}}
-<div id="buy" class="tab-content">
+@if ($activeTab === 'buy')
+<div class="tab-content active">
   <div class="product-grid">
     @forelse ($purchasedProducts as $product)
     <div class="product-card">
@@ -57,7 +64,6 @@
     @endforelse
   </div>
 </div>
-
-<script src="{{ asset('js/profile_script.js') }}"></script>
+@endif
 
 @endsection

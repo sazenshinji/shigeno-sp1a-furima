@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+
 {{-- タブ切り替え --}}
 <div class="tabs">
   <a href="{{ route('products.index', ['tab' => 'recommend', 'keyword' => request('keyword')]) }}"
@@ -12,14 +13,11 @@
     おすすめ
   </a>
 
-  @if(Auth::check())
+  {{-- ログインしていなくてもリンクを有効化 --}}
   <a href="{{ route('products.index', ['tab' => 'mylist', 'keyword' => request('keyword')]) }}"
     class="tab {{ $tab === 'mylist' ? 'active' : '' }}">
     マイリスト
   </a>
-  @else
-  <span class="tab disabled">マイリスト</span>
-  @endif
 </div>
 
 @if(!empty($keyword))
@@ -27,6 +25,10 @@
 @endif
 
 <div class="product-grid">
+  {{-- 「マイリスト」タブを開いた時の分岐 --}}
+  @if ($tab === 'mylist' && !Auth::check())
+  <p class="login-required-message">マイリストの表示にはログインが必要です。</p>
+  @else
   @forelse ($products as $product)
   <div class="product-card">
     <a href="{{ route('products.show', $product->id) }}">
@@ -42,5 +44,7 @@
   @empty
   <p>該当する商品は見つかりませんでした。</p>
   @endforelse
+  @endif
 </div>
+
 @endsection

@@ -85,10 +85,13 @@ class ProfileController extends Controller
         return redirect()->route('products.purchase', ['product' => $request->product_id]);
     }
 
-    public function  profile()
+    public function profile(Request $request)
     {
         $user = Auth::user();
-        $profile = $user->profile; // ★ プロフィールを取得
+        $profile = $user->profile;
+
+        // ★ クエリパラメータ tab を取得（デフォルトは sell）
+        $activeTab = $request->query('tab', 'sell');
 
         // 出品した商品
         $myProducts = Product::where('seller_id', $user->id)->get();
@@ -100,7 +103,7 @@ class ProfileController extends Controller
                 ->where('user_id', $user->id);
         })->get();
 
-        // ★ $profile もビューに渡す
-        return view('profiles.profile', compact('user', 'profile', 'myProducts', 'purchasedProducts'));
+        // ★ ビューに $activeTab を渡す
+        return view('profiles.profile', compact('user', 'profile', 'myProducts', 'purchasedProducts', 'activeTab'));
     }
 }
