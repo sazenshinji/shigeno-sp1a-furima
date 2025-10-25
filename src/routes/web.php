@@ -7,6 +7,9 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\TransactionController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
+
 
 Route::get('/', [ProductController::class, 'index'])->name('products.index');
 
@@ -40,3 +43,20 @@ Route::get('/products/{id}', [ProductController::class, 'show'])->name('products
 
 Route::get('/profile/edit-temp', [ProfileController::class, 'editTemp'])->name('profile.edit_temp');
 Route::post('/profile/update-temp', [ProfileController::class, 'updateTemp'])->name('profile.update_temp');
+
+Route::get('/email/verify', function () {
+    return view('auth.verify-email'); // 確認メール再送画面など
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill(); // 認証を完了させる
+
+    //認証完了後にプロフィール編集画面へ遷移
+    return redirect()->route('profile.edit')
+        ->with('success', 'メールアドレスの確認が完了しました。プロフィールを設定してください。');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    return back()->with('message', '確認メールを再送しました！');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
