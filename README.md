@@ -69,19 +69,147 @@ chmod -R 777 storage
 php artisan storage:link
 ```
 
-Stripe 決済 カード支払時の入力情報(例)：3 分後に決済が成功します。
+---------------------------------------------------------------------------------
+「Stripe」の導入について
+１．準備
+ 1.1 アカウントの準備とAPIキーの取得
+　・Stripe アカウントを準備してください。
+　・Stripeのダッシュボードで APIキー（公開可能キー / 秘密キー）を取得してください。
+　　　公開キー: pk_test_xxxxx
+　　　秘密キー: sk_test_xxxxx
+ 1.2 Stripe のインストール と .envファイルの編集
+　・Laravel に Stripe をインストールしてください。
+　　　```bash
+　　　composer require stripe/stripe-php
+　　　```
+　・.env に 取得したAPIキーを追加します。
+　　　STRIPE_KEY=pk_test_xxxxx
+　　　STRIPE_SECRET=sk_test_xxxxx
+
+２．Stripe 決済 カード支払時の入力情報例
 　・メールアドレス：test@example.com
-　・カード情報：4242 4242 4242 4242 将来の日付 任意の 3 桁
+　・カード情報：4242 4242 4242 4242 将来の日付 任意の 3桁
 　・カード名義：Stripe Test
 
-Stripe 決済 コンビニ払い時の入力情報(例)：即時に決済が成功します。
+３．Stripe 決済 コンビニ払い時の入力情報例
 　・メールアドレス：test@example.com
 　・カード名義：Stripe Test
 　・電話番号：(未入力)
+---------------------------------------------------------------------------------
+「PHPUnitによる単体テスト」について
+１．準備
+ 1.1 テスト用のデータベースの準備
+　・MySQLコンテナに入る。
+　　　```bash
+　　　docker-compose exec mysql bash
+　　　```
+　・rootユーザ(管理者)でログイン。
+　　　```bash
+　　　mysql -u root -p
+　　　root
+　　　```
+　・「demo_test」というデータベースを作成する。
+　　　```bash
+　　　CREATE DATABASE fleama_test;
+　　　```
+ 1.2 src/config/database.php ファイルの変更
+　・mysqlの配列部分をコピーし、新たにmysql_test 配列を作成し、
+　　配列の中のdatabase、username、passwordを以下の様に変更する。
+        (項目)          (変更前)                    (変更後)
+        'database'  env('DB_DATABASE', 'forge')     'demo_test'
+        'username'  env('DB_USERNAME', 'forge')	    'root'
+        'password'  env('DB_PASSWORD', '')	        'root'
+ 1.3 テスト用の.envファイル作成
+　・PHPコンテナにログインし、.envをコピーして.env.testingというファイルを作成
+　　　PHPコンテナ
+　　　```bash
+　　　cp .env .env.testing
+　　　```
+　・.env.testingファイルを以下の様に編集する
+　　　　「文頭部分のAPP_ENVとAPP_KEY」の変更
+　　　　　　　----------------------------------------------------------------
+　　　　　　　APP_NAME=Laravel
+　　　　　　　- APP_ENV=local
+　　　　　　　- APP_KEY=base64:vPtYQu63T1fmcyeBgEPd0fJ+jvmnzjYMaUf7d5iuB+c=
+　　　　　　　+ APP_ENV=test
+　　　　　　　+ APP_KEY=
+　　　　　　　APP_DEBUG=true
+　　　　　　　APP_URL=http://localhost
+　　　　　　　----------------------------------------------------------------
+　　　　「データベースの接続情報」の変更
+　　　　　　　----------------------------------------------------------------
+　　　　　　　  DB_CONNECTION=mysql_test
+　　　　　　　  DB_HOST=mysql
+　　　　　　　  DB_PORT=3306
+　　　　　　　- DB_DATABASE=laravel_db
+　　　　　　　- DB_USERNAME=laravel_user
+　　　　　　　- DB_PASSWORD=laravel_pass
+　　　　　　　+ DB_DATABASE=demo_test
+　　　　　　　+ DB_USERNAME=root
+　　　　　　　+ DB_PASSWORD=root
+　　　　　　　----------------------------------------------------------------
+　・APP_KEYに新たなテスト用のアプリケーションキーを加える
+　　　```bash
+　　　php artisan key:generate --env=testing
+　　　```
+ 1.4 キャッシュの削除とテスト用のテーブルの作成
+　・キャッシュの削除を行う
+　　　```bash
+　　　php artisan config:clear
+　　　```
+　・テスト用のテーブルの作成を行う
+　　　```bash
+　　　php artisan migrate --env=testing
+　　　```
+ 1.5 PHPUnitの設定ファイル「phpunit.xml」の編集
+　（★編集済のため作業不要です。）
 
-PHPUnit テストの実行方法。
-　・PHP コンテナー無い
-　　 php artisan test
+２．テストの実行
+　・すべてのテストを実行
+　　　```bash
+　　　php artisan test
+　　　```
+　・特定のテストを実行
+　　　```bash
+　　　php artisan test --filter=(Featureテストファイル名)
+　　　```
+---------------------------------------------------------------------------------
+「メールを用いた認証機能(MailHog)」について
+１．準備
+ 1.1 MailHogコンテナをDockerに追加
+　・docker-compose.yml に MailHog サービスを追加する。
+　　　　----------------------------------------
+        version: '3.8'
+        services:
+
+        【中略】
+
+          mailhog:
+            image: mailhog/mailhog
+            container_name: mailhog
+            ports:
+              - "1025:1025"   # SMTPポート
+              - "8025:8025"   # Web UIポート
+　　　　----------------------------------------
+ 1.2 .env ファイルの設定
+ 　・「MAIL_*」部分を以下の様に編集します。
+　　　　----------------------------------------
+
+        MAIL_MAILER=smtp
+        MAIL_HOST=mailhog
+        MAIL_PORT=1025
+        MAIL_USERNAME=null
+        MAIL_PASSWORD=null
+        MAIL_ENCRYPTION=null
+        MAIL_FROM_ADDRESS=example@example.com
+        MAIL_FROM_NAME="${APP_NAME}"
+
+　　　　----------------------------------------
+ 1.3 Dockerコンテナを再起動
+　　　```bash
+　　　docker-compose up -d --build
+　　　```
+---------------------------------------------------------------------------------
 
 ## 使用技術(実行環境)
 

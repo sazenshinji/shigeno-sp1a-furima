@@ -137,10 +137,10 @@ class A_RegisterTest extends TestCase
         // POSTリクエスト実行
         $response = $this->post('/register', $formData);
         // 登録後のリダイレクト先を確認
-        $response->assertRedirect('/profile/edit');
-        // 実際に /profile/edit にアクセスできることを確認
-        $this->get('/profile/edit')
+        $response->assertRedirect('/email/verify');
+        // 実際に /email/verify にアクセスできることを確認
+        $this->get('/email/verify')
             ->assertStatus(200)
-            ->assertViewIs('profiles.edit');
+            ->assertViewIs('auth.verify-email');
     }
 }

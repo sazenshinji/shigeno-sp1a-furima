@@ -14,7 +14,7 @@
 
   {{-- 新しい「認証はこちらから」ボタン --}}
   <div class="verify-actions">
-    <a href="http://localhost:8025/" target="_blank" class="mailhog-button">
+    <a href="http://localhost:8025/"  class="mailhog-button">
       認証はこちらから
     </a>
   </div>
