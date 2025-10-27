@@ -24,6 +24,10 @@
     </div>
 
     <form action="{{ route('products.index') }}" method="GET" class="search-box">
+      {{-- 現在のタブ情報を保持する hidden フィールド --}}
+      <input type="hidden" name="tab" value="{{ request('tab', 'recommend') }}">
+      
+      {{-- 検索キーワード --}}
       <input type="text" name="keyword" placeholder="  なにをお探しですか？"
         value="{{ request('keyword') }}">
     </form>
