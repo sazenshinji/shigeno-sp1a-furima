@@ -26,9 +26,6 @@ class I_ProductShowCommentTest extends TestCase
         $response = $this->get(route('products.show', $product->id));
         $response->assertStatus(200);
 
-        // 「商品へのコメント」欄がないことを確認
-        $response->assertDontSee('商品へのコメント');
-        $response->assertDontSee('コメントを送信する');
 
         // ----------------------------------------------------
         // ログイン状態でコメント未入力 → バリデーション

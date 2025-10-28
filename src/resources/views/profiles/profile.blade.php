@@ -21,10 +21,10 @@
 
 {{-- タブ切り替え --}}
 <div class="tabs">
-  <a href="{{ route('profile.show', ['tab' => 'sell']) }}"
+  <a href="{{ route('profile.show', ['tab' => 'sell', 'keyword' => request('keyword')]) }}"
     class="tab-link {{ $activeTab === 'sell' ? 'active' : '' }}">出品した商品</a>
 
-  <a href="{{ route('profile.show', ['tab' => 'buy']) }}"
+  <a href="{{ route('profile.show', ['tab' => 'buy', 'keyword' => request('keyword')]) }}"
     class="tab-link {{ $activeTab === 'buy' ? 'active' : '' }}">購入した商品</a>
 </div>
 

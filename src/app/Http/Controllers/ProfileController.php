@@ -90,20 +90,41 @@ class ProfileController extends Controller
         $user = Auth::user();
         $profile = $user->profile;
 
-        // ★ クエリパラメータ tab を取得（デフォルトは sell）
+        // タブと検索キーワード
         $activeTab = $request->query('tab', 'sell');
+        $keyword   = $request->query('keyword');
 
-        // 出品した商品
-        $myProducts = Product::where('seller_id', $user->id)->get();
+        // ✅ 想定外のtabが来た場合は 'sell' に揃える
+        if (!in_array($activeTab, ['sell', 'buy'], true)) {
+            $activeTab = 'sell';
+        }
 
-        // 購入した商品
+        // 出品した商品（ログインユーザーが seller_id のもの）
+        $myProducts = Product::where('seller_id', $user->id)
+            ->when($keyword, function ($query, $keyword) {
+                $query->where('name', 'like', "%{$keyword}%");
+            })
+            ->get();
+
+        // 購入した商品（transactions 経由）
         $purchasedProducts = Product::whereIn('id', function ($query) use ($user) {
             $query->select('product_id')
                 ->from('transactions')
                 ->where('user_id', $user->id);
-        })->get();
+        })
+            ->when($keyword, function ($query, $keyword) {
+                $query->where('name', 'like', "%{$keyword}%");
+            })
+            ->get();
 
-        // ★ ビューに $activeTab を渡す
-        return view('profiles.profile', compact('user', 'profile', 'myProducts', 'purchasedProducts', 'activeTab'));
+        return view('profiles.profile', compact(
+            'user',
+            'profile',
+            'myProducts',
+            'purchasedProducts',
+            'activeTab',
+            'keyword'
+        ));
     }
+
 }

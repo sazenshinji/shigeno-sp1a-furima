@@ -13,11 +13,19 @@ class CommentController extends Controller
 {
     public function store(CommentRequest $request, Product $product)
     {
+        //ログインしていない場合はエラーを返してリダイレクト
+        if (!Auth::check()) {
+            return redirect()
+                ->route('products.show', $product->id)
+                ->with('login_required_comment', 'コメント送信にはログインが必要です。');
+        }
+
+        //ログイン済みならコメントを保存
         Comment::create([
             'product_id' => $product->id,
             'user_id'    => Auth::id(),
             'comment'    => $request->comment,
-            'datetime'       => Carbon::now(),
+            'datetime'   => Carbon::now(),
         ]);
 
         return redirect()->route('products.show', $product->id)

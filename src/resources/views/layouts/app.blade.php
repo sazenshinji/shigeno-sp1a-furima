@@ -6,11 +6,14 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>フリマアプリ</title>
+
   <link rel="stylesheet" href="{{ asset('css/sanitize.css') }}" />
   <link rel="stylesheet" href="{{ asset('css/common.css')}}">
+
   <!-- Stripe -->
   <script src="https://js.stripe.com/v3/"></script>
   <meta name="stripe-key" content="{{ config('services.stripe.key') }}">
+
   @yield('css')
 </head>
 
@@ -23,12 +26,26 @@
       </a>
     </div>
 
-    <form action="{{ route('products.index') }}" method="GET" class="search-box">
-      {{-- 現在のタブ情報を保持する hidden フィールド --}}
-      <input type="hidden" name="tab" value="{{ request('tab', 'recommend') }}">
-      
+    @php
+    // ✅ 現在のページがプロフィールなら、タブ（sell/buy）を優先
+    $currentTabForSearch = request()->routeIs('profile.show')
+    ? request('tab', 'sell') // プロフィールではデフォルトsell
+    : request('tab', 'recommend'); // それ以外はrecommend
+    @endphp
+
+    {{-- ✅ 検索フォーム --}}
+    <form
+      action="{{ request()->routeIs('profile.show') ? route('profile.show') : route('products.index') }}"
+      method="GET"
+      class="search-box">
+      {{-- 現在のタブ情報を保持 --}}
+      <input type="hidden" name="tab" value="{{ $currentTabForSearch }}">
+
       {{-- 検索キーワード --}}
-      <input type="text" name="keyword" placeholder="  なにをお探しですか？"
+      <input
+        type="text"
+        name="keyword"
+        placeholder="  なにをお探しですか？"
         value="{{ request('keyword') }}">
     </form>
 

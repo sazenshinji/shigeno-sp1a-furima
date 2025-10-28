@@ -21,7 +21,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 
     Route::post('/products/{product}/like', [LikeController::class, 'toggle'])->name('products.like');
-    Route::post('/products/{product}/comments', [CommentController::class, 'store'])->name('products.comments.store');
 
     Route::post('/products/{product}/checkout', [TransactionController::class, 'checkout'])->name('products.checkout');
     Route::get('/products/{product}/purchase/complete', [TransactionController::class, 'complete'])
@@ -33,6 +32,9 @@ Route::middleware(['auth'])->group(function () {
         ->name('products.purchase.method');
 });
 
+Route::post('/products/{product}/comments', [CommentController::class, 'store'])
+    ->name('products.comments.store');
+    
 Route::get('/products/{product}/purchase', [TransactionController::class, 'create'])->name('products.purchase');
 
 Route::post('/register', [RegisterController::class, 'store'])

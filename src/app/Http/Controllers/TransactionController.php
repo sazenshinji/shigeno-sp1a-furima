@@ -17,8 +17,9 @@ class TransactionController extends Controller
     public function create(Product $product)
     {
         if (!Auth::check()) {
-            return redirect()->route('products.show', $product->id)
-                ->with('login_required', '購入するにはログインが必要です');
+            return redirect()
+                ->route('products.show', $product->id)
+                ->with('login_required_purchase', '購入するにはログインが必要です');
         }
 
         $profile = Auth::user()->profile ?? null;
@@ -61,18 +62,17 @@ class TransactionController extends Controller
 
         $postal_code = $request->input('postal_code');
         $address     = $request->input('address');
-        $building    = $request->input('building');
+        // 🔽 空欄なら null に変換
+        $building    = $request->filled('building') && $request->input('building') !== ''
+            ? $request->input('building')
+            : null;
 
         // 支払い方法ごとの設定
         if ($request->payment_method == 1) {
-            // ✅ コンビニ払い
+            // ✅ コンビニ払い（テスト用：即DB登録）
             $paymentType = ['konbini'];
             $method = 1;
 
-            /**
-             * ✅ テスト用：Stripe画面に行く前にDB登録
-             * 　本来は決済後に complete() で登録するが、テスト時はここで登録しておく
-             */
             Transaction::create([
                 'product_id'     => $product->id,
                 'user_id'        => Auth::id(),
@@ -80,10 +80,10 @@ class TransactionController extends Controller
                 'payment_method' => 1,
                 'postal_code'    => $postal_code,
                 'address'        => $address,
-                'building'       => $building,
+                'building'       => $building, // ← 空欄時はNULL
             ]);
         } elseif ($request->payment_method == 2) {
-            // ✅ カード払い
+            // ✅ カード払い（決済完了後に登録する）
             $paymentType = ['card'];
             $method = 2;
         } else {
@@ -100,7 +100,6 @@ class TransactionController extends Controller
             'cancel_url' => route('products.purchase', ['product' => $product->id]),
         ]);
 
-        // ✅ JSONで返す（カード・コンビニ共通）
         return response()->json(['url' => $session->url]);
     }
 
@@ -123,11 +122,26 @@ class TransactionController extends Controller
             $tempProfile = session('temp_profile');
             $profile = Auth::user()->profile ?? null;
 
-            $postal_code = $tempProfile['postal_code'] ?? ($profile->postal_code ?? '');
-            $address     = $tempProfile['address'] ?? ($profile->address ?? '');
-            $building    = $tempProfile['building'] ?? ($profile->building ?? '');
+            // ---- ✅ 建物名の扱いを厳密に変更 ----
+            if (is_array($tempProfile)) {
+                // temp_profileがある場合は優先
+                $postal_code = $tempProfile['postal_code'] ?? ($profile->postal_code ?? '');
+                $address     = $tempProfile['address'] ?? ($profile->address ?? '');
+                // buildingキーが存在しているか確認し、空欄ならNULLに変換
+                if (array_key_exists('building', $tempProfile)) {
+                    $building = $tempProfile['building'] === '' ? null : $tempProfile['building'];
+                } else {
+                    // キーがなければプロフィール参照
+                    $building = $profile->building ?? null;
+                }
+            } else {
+                // temp_profileが存在しない場合はプロフィールを使用
+                $postal_code = $profile->postal_code ?? '';
+                $address     = $profile->address ?? '';
+                $building    = $profile->building ?? null;
+            }
 
-            // DB登録
+            // ---- ✅ DB登録 ----
             Transaction::create([
                 'product_id'     => $product->id,
                 'user_id'        => Auth::id(),
@@ -135,16 +149,14 @@ class TransactionController extends Controller
                 'payment_method' => $method,
                 'postal_code'    => $postal_code,
                 'address'        => $address,
-                'building'       => $building,
+                'building'       => $building, // ← 空欄時は確実にNULL
             ]);
 
             session()->forget('temp_profile');
 
-            if ($method == 1) {
-                $msg = 'コンビニ支払いが完了しました！';
-            } else {
-                $msg = 'カード決済が完了しました！';
-            }
+            $msg = $method == 1
+                ? 'コンビニ支払いが完了しました！'
+                : 'カード決済が完了しました！';
 
             return redirect()->route('products.index')->with('success', $msg);
         }
@@ -152,4 +164,5 @@ class TransactionController extends Controller
         return redirect()->route('products.purchase', ['product' => $product->id])
             ->withErrors(['payment' => '決済が完了しませんでした。']);
     }
+
 }

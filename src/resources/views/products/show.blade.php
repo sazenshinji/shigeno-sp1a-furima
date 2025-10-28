@@ -45,14 +45,15 @@
       </div>
     </div>
 
+    {{--購入ボタン部分 --}}
     @if ($product->is_sold)
     <button class="purchase-btn disabled" disabled>購入済み</button>
     @else
     <a href="{{ route('products.purchase', $product->id) }}" class="purchase-btn">購入手続きへ</a>
 
-    {{-- 🔽 未ログインエラーメッセージ表示 --}}
-    @if (session('login_required'))
-    <p class="error-message">{{ session('login_required') }}</p>
+    {{--購入ボタン専用メッセージ --}}
+    @if (session('login_required_purchase'))
+    <p class="error-message">{{ session('login_required_purchase') }}</p>
     @endif
     @endif
 
@@ -90,7 +91,7 @@
       @endforelse
     </div>
 
-    @auth
+    {{--コメント投稿フォーム部分 --}}
     <h3>商品へのコメント</h3>
     <form action="{{ route('products.comments.store', $product->id) }}" method="POST">
       @csrf
@@ -99,8 +100,12 @@
       <div class="error">{{ $message }}</div>
       @enderror
       <button type="submit" class="comment-submit-btn">コメントを送信する</button>
+
+      {{--コメント送信専用メッセージ --}}
+      @if (session('login_required_comment'))
+      <p class="error-message">{{ session('login_required_comment') }}</p>
+      @endif
     </form>
-    @endauth
 
   </div>
 </div>
