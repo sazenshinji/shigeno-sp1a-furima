@@ -47,7 +47,7 @@ class ProductController extends Controller
     // 出品処理
     public function store(ExhibitionRequest $request)
     {
-        $validated = $request->validated(); // ← FormRequestが自動検証済みの結果を取得
+        $validated = $request->validated();
 
         // 画像アップロード
         $path = $request->file('image')->store('products', 'public');
@@ -81,5 +81,4 @@ class ProductController extends Controller
 
         return view('products.show', compact('product'));
     }
-
 }

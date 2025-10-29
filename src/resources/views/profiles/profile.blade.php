@@ -28,7 +28,7 @@
     class="tab-link {{ $activeTab === 'buy' ? 'active' : '' }}">購入した商品</a>
 </div>
 
-<hr class="tab-divider"><!-- 横線 -->
+<hr class="tab-divider">
 
 {{-- 出品した商品 --}}
 @if ($activeTab === 'sell')

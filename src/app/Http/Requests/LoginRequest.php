@@ -22,5 +22,4 @@ class LoginRequest extends FortifyLoginRequest
             'password.required' => 'パスワードを入力してください',
         ];
     }
-
 }

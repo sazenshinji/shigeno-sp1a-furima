@@ -1,214 +1,211 @@
 .product-detail {
-  display: flex;
-  gap: 30px;
-  margin: 30px auto;
-  max-width: 1000px;
+    display: flex;
+    gap: 30px;
+    margin: 30px auto;
+    max-width: 1000px;
 }
 
 .product-detail-left {
-  flex: 1;
+    flex: 1;
 }
 
 .detail-images {
-  position: relative;
-  display: flex;
-  justify-content: center;
+    position: relative;
+    display: flex;
+    justify-content: center;
 }
 
 .detail-image {
-  width: 85%; /* 変更しなくてもOK */
-  border: 1px solid #ddd;
-  border-radius: 8px;
+    width: 85%;
+    border: 1px solid #ddd;
+    border-radius: 8px;
 }
 
 .product-sold-overlay {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 70%;
-  height: auto;
-  opacity: 0.9;
-  pointer-events: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    height: auto;
+    opacity: 0.9;
+    pointer-events: none;
 }
 
 .product-detail-right {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .product-detail-right h2 {
-  margin-bottom: 0px; /* 商品名とブランドの間を詰める */
+    margin-bottom: 0px;
 }
 
 .product-detail-right h3 {
-  margin-bottom: 5px; /* ← 通常より小さく（10〜20pxが標準） */
+    margin-bottom: 5px;
 }
 
-
-
 .product-detail-right .brand {
-  margin-top: 0;
-  margin-bottom: 1px; /* ブランドと価格の間を詰める */
+    margin-top: 0;
+    margin-bottom: 1px;
 }
 
 .product-detail-right .price {
-  margin-bottom: 3px; /* 価格とアイコンの間を詰める */
+    margin-bottom: 3px;
 }
 
 .price {
-  font-size: 20px;
-  font-weight: bold;
+    font-size: 20px;
+    font-weight: bold;
 }
 .price .tax-text {
-  font-size: 14px;   /* ← 通常より少し小さく */
-  color: #666;       /* ← グレー気味に（任意） */
-  margin-left: 4px;  /* ← 価格との間に少し隙間 */
-  vertical-align: baseline; /* ← 行の高さを自然に合わせる */
+    font-size: 14px;
+    color: #666;
+    margin-left: 4px;
+    vertical-align: baseline;
 }
 
 .icons {
-  display: flex;
-  flex-direction: column; /* 縦並びに */
-  align-items: flex-start;
-  gap: 6px;
-  margin: 10px 0;
-  margin-left: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    margin: 10px 0;
+    margin-left: 15px;
 }
 
 .icon-row {
-  display: flex;
-  gap: 20px;
+    display: flex;
+    gap: 20px;
 }
 
 .count-row {
-  display: flex;
-  gap: 36px;
-  font-size: 14px;
-  color: #333;
-  margin-left: 8px;
+    display: flex;
+    gap: 36px;
+    font-size: 14px;
+    color: #333;
+    margin-left: 8px;
 }
 
 .icon-row img {
-  width: 24px;
-  height: 24px;
+    width: 24px;
+    height: 24px;
 }
 
 .purchase-btn,
 .comment-submit-btn {
-  margin-top: 15px;
-  background-color: #ff5555;
-  color: white;
-  padding: 12px;
-  border: none;
-  border-radius: 6px;
-  font-size: 16px;
-  cursor: pointer;
-  display: block;
-  width: 100%;  /* 横幅を親要素に合わせる */
-  text-align: center;
+    margin-top: 15px;
+    background-color: #ff5555;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    text-align: center;
 }
 
 .purchase-btn:hover {
-  background-color: #e53935;
+    background-color: #e53935;
 }
 .comment-submit-btn:hover {
-  background-color: #e53935;
+    background-color: #e53935;
 }
 
 .description {
-  margin-top: 0;
-  line-height: 1.6;
+    margin-top: 0;
+    line-height: 1.6;
 }
 
 .like-btn {
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
 }
 
 .like-btn img {
-  width: 24px;
-  height: 24px;
+    width: 24px;
+    height: 24px;
 }
 
 .product-info {
-  margin-top: 0px;
-  font-size: 14px;
-  color: #333;
+    margin-top: 0px;
+    font-size: 14px;
+    color: #333;
 }
 
 .product-info p {
-  margin: 6px 0;
+    margin: 6px 0;
 }
 
-
 .badge {
-  display: inline-block;
-  background-color: #f5f5f5;
-  border: 1px solid #ddd;
-  padding: 3px 8px;
-  margin-right: 6px;
-  border-radius: 12px;
-  font-size: 13px;
+    display: inline-block;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    padding: 3px 8px;
+    margin-right: 6px;
+    border-radius: 12px;
+    font-size: 13px;
 }
 
 .comments {
-  margin-top: 5px;
-  padding-top: 10px;
+    margin-top: 5px;
+    padding-top: 10px;
 }
 
 .comment-item {
-  margin-bottom: 15px;
+    margin-bottom: 15px;
 }
 
 .comment-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .comment-user-img {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  object-fit: cover;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .comment-username {
-  font-weight: bold;
-  font-size: 14px;
+    font-weight: bold;
+    font-size: 14px;
 }
 
 .comment-body {
-  margin-left: 42px; /* アイコン分だけずらす */
-  font-size: 14px;
-  color: #333;
-    word-wrap: break-word;  /* 長い単語でも強制改行 */
-  overflow-wrap: break-word; /* 推奨プロパティ */
-  white-space: normal;    /* 必ず折り返す */
-  max-width: 30em;        /* 表示幅を約40文字分に制限 */
+    margin-left: 42px;
+    font-size: 14px;
+    color: #333;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    max-width: 30em;
 }
 
 .comment-textarea {
-  width: 100%;
-  padding: 8px;
-  margin-top: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  resize: vertical;
-  height: 150px;
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    resize: vertical;
+    height: 150px;
 }
 
 .error {
-  color: red;
-  font-size: 13px;
+    color: red;
+    font-size: 13px;
 }
 
 .error-message {
-  color: red;
-  margin-top: 8px;
-  font-weight: bold;
+    color: red;
+    margin-top: 8px;
+    font-weight: bold;
 }

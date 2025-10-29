@@ -34,7 +34,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::post('/products/{product}/comments', [CommentController::class, 'store'])
     ->name('products.comments.store');
-    
+
 Route::get('/products/{product}/purchase', [TransactionController::class, 'create'])->name('products.purchase');
 
 Route::post('/register', [RegisterController::class, 'store'])
@@ -47,13 +47,12 @@ Route::get('/profile/edit-temp', [ProfileController::class, 'editTemp'])->name('
 Route::post('/profile/update-temp', [ProfileController::class, 'updateTemp'])->name('profile.update_temp');
 
 Route::get('/email/verify', function () {
-    return view('auth.verify-email'); // 確認メール再送画面など
+    return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill(); // 認証を完了させる
+    $request->fulfill();
 
-    //認証完了後にプロフィール編集画面へ遷移
     return redirect()->route('profile.edit')
         ->with('success', 'メールアドレスの確認が完了しました。プロフィールを設定してください。');
 })->middleware(['auth', 'signed'])->name('verification.verify');

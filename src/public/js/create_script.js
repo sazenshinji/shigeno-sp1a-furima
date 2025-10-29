@@ -12,7 +12,7 @@ document.getElementById("image").addEventListener("change", function (e) {
             preview.style.display = "block";
             // 「画像を選択する」テキストを非表示
             placeholder.style.display = "none";
-            // ✅ 画像アップロード後に枠を非表示
+            // 画像アップロード後に枠を非表示
             imageBox.classList.add("no-border");
         };
         reader.readAsDataURL(file);
@@ -21,7 +21,7 @@ document.getElementById("image").addEventListener("change", function (e) {
         preview.src = "";
         preview.style.display = "none";
         placeholder.style.display = "block";
-        // ✅ 枠を再表示
+        // 枠を再表示
         imageBox.classList.remove("no-border");
     }
 });

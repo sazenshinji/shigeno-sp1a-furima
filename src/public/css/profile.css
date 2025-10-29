@@ -1,9 +1,9 @@
 /* プロフィールヘッダー */
 .profile-header {
     display: flex;
-    align-items: center;        /* 垂直方向を中央揃え */
-    justify-content: center;    /* 全体を中央に配置 */
-    gap: 30px;                  /* 子要素同士の間隔 */
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
     margin: 30px 0;
 }
 
@@ -11,8 +11,8 @@
 .profile-header .profile-image {
     width: 80px;
     height: 80px;
-    border-radius: 50%;         /* 丸型にする */
-    object-fit: cover;          /* 画像を枠内に収める */
+    border-radius: 50%;
+    object-fit: cover;
     border: 2px solid #ddd;
 }
 
@@ -25,7 +25,7 @@
 
 /* 編集ボタン */
 .profile-header .profile-edit-btn {
-    margin-left: 80px; /* ユーザー名との間隔を大きくする */
+    margin-left: 80px;
     padding: 8px 16px;
     border: 2px solid red;
     color: red;
@@ -45,15 +45,15 @@
 /* タブ部分 */
 .tabs {
     display: flex;
-    justify-content: flex-start; /* 左寄せ */
+    justify-content: flex-start;
     margin: 20px 0 10px 80px;
     gap: 20px;
 }
 
 .tab-link {
     padding: 8px 16px;
-    border: none;             /* 枠なし */
-    background: transparent;  /* 白背景（親背景に合わせるならtransparent） */
+    border: none;
+    background: transparent;
     cursor: pointer;
     font-weight: bold;
     font-size: 16px;
@@ -62,18 +62,17 @@
 }
 
 .tab-link.active {
-    color: red;  /* 選択中は赤文字 */
+    color: red;
 }
 
 .tab-link:hover {
-    color: #ff6f61; /* hover時に少し薄い赤に */
+    color: #ff6f61;
 }
 
-/* 横線 */
 .tab-divider {
     border: none;
     border-top: 1px solid #ddd;
-    margin: 0 0 20px; /* 下に余白 */
+    margin: 0 0 20px;
 }
 
 .tab-content {

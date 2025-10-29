@@ -57,7 +57,7 @@ class Product extends Model
     {
         return $this->belongsTo(User::class, 'seller_id');
     }
-    
+
     public function comments()
     {
         return $this->hasMany(Comment::class);
@@ -72,5 +72,4 @@ class Product extends Model
     {
         return $this->belongsTo(Condition::class);
     }
-    
 }

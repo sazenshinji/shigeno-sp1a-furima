@@ -1,140 +1,114 @@
-/* ==============================
-   基本レイアウト
-============================== */
 .auth-container {
-  width: 480px;                /* ← 320px → 480px に拡張（フォーム全体を広げる） */
-  margin: 50px auto;
-  text-align: center;
+    width: 480px;
+    margin: 50px auto;
+    text-align: center;
 }
 
-/* ==============================
-   入力欄の共通設定
-============================== */
 .auth-container input {
-  display: block;
-  width: 100%;
-  margin: 10px 0;
-  padding: 10px;               /* ← 内側余白を少し広くして打ちやすく */
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
-/* ==============================
-   ボタン設定
-============================== */
 .auth-container button {
-  display: block;
-  width: 100%;                 /* ← 横いっぱいに */
-  padding: 12px;               /* ← 少し大きくして押しやすく */
-  margin-top: 30px;
-  background-color: #e60000;   /* 🔴 赤背景 */
-  color: #fff;                 /* ⚪ 白文字 */
-  font-weight: bold;
-  font-size: 18px;
-  border: none;                /* 枠線を消す */
-  border-radius: 4px;          /* 角を少し丸くする */
-  cursor: pointer;
-  transition: background-color 0.2s;
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-top: 30px;
+    background-color: #e60000;
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
 }
 
-/* hover時に少し濃い赤に */
 .auth-container button:hover {
-  background-color: #cc0000;
+    background-color: #cc0000;
 }
 
-/* ==============================
-   プロフィール画像エリア
-============================== */
 .profile-image-container {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start; /* ← 左揃えに変更（他の入力欄とそろえる） */
-  gap: 20px;
-  margin-bottom: 50px;         /* ← ユーザー名との間を広く */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+    margin-bottom: 50px;
 }
 
 .profile-image-wrapper {
-  position: relative;
-  width: 100px;
-  height: 100px;
+    position: relative;
+    width: 100px;
+    height: 100px;
 }
 
-/* プロフィール画像 */
 .profile-image {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 1px solid #ccc;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #ccc;
 }
 
-/* グレーの丸（未選択時） */
 .placeholder-circle {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background-color: #ddd; /* グレー */
-  border: 1px solid #bbb;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #ddd;
+    border: 1px solid #bbb;
 }
 
-/* ==============================
-   ファイル選択ボタン
-============================== */
 .custom-file-label {
-  display: inline-block;
-  padding: 8px 16px;
-  border: 2px solid red;
-  color: red;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-  background: white;
-  transition: 0.2s;
+    display: inline-block;
+    padding: 8px 16px;
+    border: 2px solid red;
+    color: red;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    background: white;
+    transition: 0.2s;
 }
 
 .custom-file-label:hover {
-  background: red;
-  color: white;
+    background: red;
+    color: white;
 }
 
-/* input[type=file] は非表示 */
 #user_image {
-  display: none;
+    display: none;
 }
 
-/* ==============================
-   各入力項目（ユーザー名〜建物名）
-============================== */
 .form-group {
-  text-align: left;        /* ← ラベルを左寄せに */
-  margin-bottom: 25px;     /* ← 各項目の間隔をゆとりある値に */
+    text-align: left;
+    margin-bottom: 25px;
 }
 
 .form-group label {
-  display: block;
-  font-weight: bold;
-  color: #000;             /* ← 黒文字 */
-  margin-bottom: 5px;      /* ← ラベルと入力欄の間に余白 */
+    display: block;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 5px;
 }
 
 .form-group input {
-  width: 100%;             /* ← 横いっぱい */
-  padding: 10px;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
-/* 建物名とボタンの間隔をさらに広げる */
 .building-group {
-  margin-bottom: 50px;
+    margin-bottom: 50px;
 }
 
-/* ==============================
-   エラーメッセージ
-============================== */
 .error-message {
-  color: red;
-  font-size: 13px;
+    color: red;
+    font-size: 13px;
 }

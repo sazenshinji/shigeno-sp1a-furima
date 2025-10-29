@@ -62,14 +62,14 @@ class TransactionController extends Controller
 
         $postal_code = $request->input('postal_code');
         $address     = $request->input('address');
-        // 🔽 空欄なら null に変換
+        // 空欄なら null に変換
         $building    = $request->filled('building') && $request->input('building') !== ''
             ? $request->input('building')
             : null;
 
         // 支払い方法ごとの設定
         if ($request->payment_method == 1) {
-            // ✅ コンビニ払い（テスト用：即DB登録）
+            // コンビニ払い（テスト用：即DB登録）
             $paymentType = ['konbini'];
             $method = 1;
 
@@ -82,15 +82,18 @@ class TransactionController extends Controller
                 'address'        => $address,
                 'building'       => $building, // ← 空欄時はNULL
             ]);
+
+            // 一時住所セッションを削除（次回購入時にプロフィール住所を表示するため）
+            session()->forget('temp_profile');
         } elseif ($request->payment_method == 2) {
-            // ✅ カード払い（決済完了後に登録する）
+            // カード払い（決済完了後に登録する）
             $paymentType = ['card'];
             $method = 2;
         } else {
             return back()->withErrors(['payment_method' => '支払い方法を選択してください']);
         }
 
-        // ✅ Stripeセッション作成（カード・コンビニ共通）
+        // Stripeセッション作成（カード・コンビニ共通）
         $session = StripeSession::create([
             'payment_method_types' => $paymentType,
             'line_items' => $commonLineItem,
@@ -122,7 +125,7 @@ class TransactionController extends Controller
             $tempProfile = session('temp_profile');
             $profile = Auth::user()->profile ?? null;
 
-            // ---- ✅ 建物名の扱いを厳密に変更 ----
+            // ---- 建物名の扱いを厳密に変更 ----
             if (is_array($tempProfile)) {
                 // temp_profileがある場合は優先
                 $postal_code = $tempProfile['postal_code'] ?? ($profile->postal_code ?? '');
@@ -141,7 +144,7 @@ class TransactionController extends Controller
                 $building    = $profile->building ?? null;
             }
 
-            // ---- ✅ DB登録 ----
+            // ---- DB登録 ----
             Transaction::create([
                 'product_id'     => $product->id,
                 'user_id'        => Auth::id(),
@@ -164,5 +167,4 @@ class TransactionController extends Controller
         return redirect()->route('products.purchase', ['product' => $product->id])
             ->withErrors(['payment' => '決済が完了しませんでした。']);
     }
-
 }

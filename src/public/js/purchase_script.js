@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // ---- 支払い方法選択フォームの制御 ----
+    // 支払い方法選択フォームの制御
     const select = document.getElementById("payment-select");
     const methodForm = document.getElementById("method-form");
 
@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // ---- Stripe処理（カード・コンビニ共通） ----
+    // Stripe処理（カード・コンビニ共通）
     const form = document.getElementById("payment-form");
     if (!form) return;
 
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        // ✅ カード・コンビニ共通でStripeへ
+        // カード・コンビニ共通でStripeへ
         e.preventDefault();
 
         try {

@@ -36,16 +36,15 @@
 .verify-container button {
     margin-top: 15px;
     padding: 10px 20px;
-    background: none; /* 背景色をなしに */
-    border: none; /* 枠線も消す */
-    color: #3c99fd; /* 文字色を青に */
+    background: none;
+    border: none;
+    color: #3c99fd;
     font-size: 16px;
-    /* font-weight: bold; 少し目立たせる（任意） */
-    cursor: pointer; /* マウスカーソルをポインタに */
-    text-decoration: underline; /* 下線でリンク風に見せる（任意） */
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 .verify-container button:hover {
-    color: #0056b3; /* ホバー時に少し濃い青へ */
-    text-decoration: none; /* 下線を消して動きを出す */
+    color: #0056b3;
+    text-decoration: none;
 }

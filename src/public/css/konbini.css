@@ -1,7 +1,7 @@
 .konbini-container {
     display: flex;
     flex-direction: column;
-    align-items: center; /* 中央揃え */
+    align-items: center;
     justify-content: center;
     text-align: center;
     margin-top: 50px;
@@ -14,13 +14,13 @@
 }
 
 .konbini-box {
-    border: 2px solid #ccc;       /* 四角い枠 */
-    border-radius: 8px;           /* 少し丸み */
+    border: 2px solid #ccc;
+    border-radius: 8px;
     padding: 20px 30px;
     margin: 20px 0;
-    background: #f9f9f9;          /* 薄い背景色 */
-    width: fit-content;           /* コンテンツ幅に合わせる */
-    text-align: left;             /* リストは左揃え */
+    background: #f9f9f9;
+    width: fit-content;
+    text-align: left;
 }
 
 .konbini-box ul {

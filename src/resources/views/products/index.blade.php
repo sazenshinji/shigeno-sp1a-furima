@@ -13,7 +13,6 @@
     おすすめ
   </a>
 
-  {{-- ログインしていなくてもリンクを有効化 --}}
   <a href="{{ route('products.index', ['tab' => 'mylist', 'keyword' => request('keyword')]) }}"
     class="tab {{ $tab === 'mylist' ? 'active' : '' }}">
     マイリスト

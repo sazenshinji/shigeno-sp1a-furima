@@ -62,12 +62,12 @@
 
     <h3>商品の情報</h3>
     <div class="product-info">
-      <p><strong>カテゴリー：</strong>
+      <p><strong>カテゴリー</strong>
         @foreach($product->categories as $category)
         <span class="badge">{{ $category->name }}</span>
         @endforeach
       </p>
-      <p><strong>商品の状態：</strong>
+      <p><strong>商品の状態</strong>
         {{ $product->condition->name }}
       </p>
     </div>

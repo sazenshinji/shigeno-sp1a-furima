@@ -14,7 +14,7 @@ class RegisterController extends Controller
         // FormRequest の validated() でデータを取得
         $user = app(CreateNewUser::class)->create($request->validated());
 
-        //登録後にログイン（auth ミドルウェア通過のため必要）
+        //登録後にログイン
         Auth::login($user);
 
         // メール認証リンクを送信

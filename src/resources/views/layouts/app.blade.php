@@ -27,13 +27,13 @@
     </div>
 
     @php
-    // ✅ 現在のページがプロフィールなら、タブ（sell/buy）を優先
+    // 現在のページがプロフィールなら、タブ（sell/buy）を優先
     $currentTabForSearch = request()->routeIs('profile.show')
     ? request('tab', 'sell') // プロフィールではデフォルトsell
     : request('tab', 'recommend'); // それ以外はrecommend
     @endphp
 
-    {{-- ✅ 検索フォーム --}}
+    {{-- 検索フォーム --}}
     <form
       action="{{ request()->routeIs('profile.show') ? route('profile.show') : route('products.index') }}"
       method="GET"

@@ -82,7 +82,7 @@ body {
     width: 100%;
     height: auto;
 }
-/* hover時のアニメーション */
+
 .product-card:hover {
     transform: translateY(-3px);
     box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
@@ -96,21 +96,21 @@ body {
 }
 .product-card a {
     text-decoration: none;
-    color: inherit; /* ← リンクの色を親要素に合わせる（自然な見た目に） */
+    color: inherit;
 }
 
 /* ログイン/ログアウトとマイページのリンクだけ白文字に */
 .nav-buttons .nav-login,
 .nav-buttons .nav-logout,
 .nav-buttons .nav-mypage {
-    color: #fff; /* 白文字 */
+    color: #fff;
 }
 
 .nav-buttons .nav-login:hover,
 .nav-buttons .nav-logout:hover,
 .nav-buttons .nav-mypage:hover {
     text-decoration: underline;
-    color: #f0f0f0; /* hover時は少しグレー寄り */
+    color: #f0f0f0;
 }
 
 /* 出品ボタンだけ白背景 */
@@ -119,24 +119,23 @@ body {
     color: #333; /* 文字色は濃いグレー */
     padding: 6px 20px;
     border-radius: 4px;
-    border: 1px solid #ccc; /* 薄い枠線 */
+    border: 1px solid #ccc;
     text-decoration: none;
     transition: 0.2s;
 }
 
 .nav-buttons .nav-create:hover {
-    background-color: #f5f5f5; /* hover時に少しグレー */
+    background-color: #f5f5f5;
     border-color: #999;
 }
 
-/* 検索ボックス内のプレースホルダー文字色を黒にする */
 .search-box input::placeholder {
-  color: #000; /* ← 黒 */
-  opacity: 1;  /* ← ブラウザによって薄くなるのを防ぐ */
+    color: #000;
+    opacity: 1;
 }
 
 .error-message {
-  color: red;
-  margin-top: 8px;
-  font-size: 14px;
+    color: red;
+    margin-top: 8px;
+    font-size: 14px;
 }

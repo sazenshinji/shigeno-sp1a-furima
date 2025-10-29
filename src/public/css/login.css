@@ -1,73 +1,69 @@
 .auth-container {
-  width: 400px;
-  margin: 50px auto;
-  text-align: center;
+    width: 400px;
+    margin: 50px auto;
+    text-align: center;
 }
 
 .auth-container h2 {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 /* 各入力ブロック */
 .form-group {
-  text-align: left;     /* ← ラベルを左寄せに */
-  margin-bottom: 15px;
+    text-align: left;
+    margin-bottom: 15px;
 }
 
-/* ラベル文字（黒文字） */
 .form-group label {
-  display: block;
-  font-weight: bold;
-  color: #000;          /* ← 黒文字 */
-  margin-bottom: 5px;   /* ← ラベルと入力欄の間に少し余白 */
+    display: block;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 5px;
 }
 
 .auth-container input {
-  display: block;
-  width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
+    display: block;
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
 }
 
 .auth-container input {
-  margin-bottom: 5px;
+    margin-bottom: 5px;
 }
 
 /* ログインボタンのデザイン */
 .auth-container button {
-  display: block;
-  width: 100%;
-  padding: 10px 0;
-  margin-top: 55px;
-  background-color: #e60000; /* 🔴 赤地 */
-  color: #fff;               /* ⚪ 白文字 */
-  font-weight: bold;
-  border: none;              /* 枠線を消す */
-  border-radius: 4px;        /* 角を少し丸く */
-  cursor: pointer;           /* ホバー時にポインタに */
-  transition: background-color 0.2s;
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    margin-top: 55px;
+    background-color: #e60000;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
 }
 
-/* hover時に少し濃い赤に */
 .auth-container button:hover {
-  background-color: #cc0000;
+    background-color: #cc0000;
 }
 
-/* 「会員登録はこちら」リンクの色を青に */
 .auth-container a {
-  display: inline-block;
-  margin-top: 20px;
-  color: #007bff;          /* 🔵 青文字（Bootstrapの標準青） */
-  text-decoration: none;
+    display: inline-block;
+    margin-top: 20px;
+    color: #007bff;
+    text-decoration: none;
 }
 
-/* hover時に少し濃く */
 .auth-container a:hover {
-  color: #0056b3;          /* 濃い青 */
-  text-decoration: underline;
+    color: #0056b3;
+    text-decoration: underline;
 }
 
 .error {
-  color: red;
-  font-size: 13px;
+    color: red;
+    font-size: 13px;
 }

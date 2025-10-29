@@ -84,7 +84,7 @@ textarea {
     color: #fff;
 }
 
-/* ✅ アップロード後に枠を消す */
+/* アップロード後に枠を消す */
 .image-upload-box.no-border {
     border: none;
 }
@@ -108,9 +108,8 @@ textarea {
     cursor: pointer;
 }
 
-/* 実際に見えるカプセル部分 */
 .category-tag span {
-    border: 1px solid red; /* 赤枠 */
+    border: 1px solid red;
     border-radius: 20px; /* カプセル型 */
     padding: 5px 15px;
     color: red; /* 文字は赤 */
@@ -125,11 +124,11 @@ textarea {
     display: none;
 }
 
-/* ✅ チェック時：背景を赤に、文字を白に反転（枠は維持） */
+/* チェック時：背景を赤に、文字を白に反転（枠は維持） */
 .category-tag input:checked + span {
     background-color: red;
     color: #fff;
-    border: 1px solid red; /* ← 枠を保つ */
+    border: 1px solid red;
 }
 
 /* 商品の状態セクション */
@@ -144,7 +143,6 @@ textarea {
     color: #333;
 }
 
-/* セレクトボックスを全幅に */
 .condition-select {
     display: block;
     width: 100%;
@@ -170,10 +168,9 @@ textarea {
 /* 価格入力全体の枠 */
 .price-input-wrapper {
     position: relative;
-    width: 100%; /* 他の入力欄と同じ幅 */
+    width: 100%;
 }
 
-/* ￥マークを入力欄の中に表示 */
 .price-input-wrapper .yen-symbol {
     position: absolute;
     left: 10px;
@@ -181,13 +178,13 @@ textarea {
     transform: translateY(-50%);
     color: #555;
     font-weight: bold;
-    pointer-events: none; /* クリックをブロックしない */
+    pointer-events: none;
 }
 
 /* 入力欄の調整 */
 .price-input-wrapper input[type="number"] {
     width: 100%;
-    padding: 8px 8px 8px 28px; /* 左に余白を追加して￥が重ならないように */
+    padding: 8px 8px 8px 28px;
     border: 1px solid #ccc;
     border-radius: 6px;
     box-sizing: border-box;
@@ -211,10 +208,7 @@ textarea {
     background: darkred;
 }
 
-/* ==============================
-   エラーメッセージ
-============================== */
 .error-message {
-  color: red;
-  font-size: 13px;
+    color: red;
+    font-size: 13px;
 }

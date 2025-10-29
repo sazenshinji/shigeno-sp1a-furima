@@ -24,6 +24,7 @@ class ProfileRequest extends FormRequest
             'building'      => 'nullable|string|max:20',
         ];
     }
+    
     public function messages(): array
     {
         return [

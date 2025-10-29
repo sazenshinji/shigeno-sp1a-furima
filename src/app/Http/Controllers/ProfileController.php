@@ -5,11 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProfileRequest;
 use App\Http\Requests\AddressRequest;
-use App\Models\Profile;
 use App\Models\Product;
-use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
+
 
 class ProfileController extends Controller
 {
@@ -17,7 +15,7 @@ class ProfileController extends Controller
     public function edit(Request $request)
     {
         $profile = Auth::user()->profile;
-        $from = $request->query('from', 'index'); // デフォルトは index に戻る
+        $from = $request->query('from', 'index');
         return view('profiles.edit', compact('profile', 'from'));
     }
 
@@ -29,14 +27,14 @@ class ProfileController extends Controller
         $profile = $user->profile; // 現在のプロフィールを取得
 
         if ($request->hasFile('user_image')) {
-            // ✅ 新しく画像をアップロードした場合
+            // 新しく画像をアップロードした場合
             $path = $request->file('user_image')->store('profiles', 'public');
             $data['user_image'] = $path;
         } elseif (!$profile || is_null($profile->user_image)) {
-            // ✅ 画像未選択 ＆ DBに画像が登録されていない場合 → デフォルト画像を設定
+            // 画像未選択 ＆ DBに画像が登録されていない場合 → デフォルト画像を設定
             $data['user_image'] = 'images/23_default-user.png';
         } else {
-            // ✅ 画像未選択 ＆ DBに既に画像がある場合 → 何も変更しない
+            // 画像未選択 ＆ DBに既に画像がある場合
             unset($data['user_image']);
         }
 
@@ -94,7 +92,7 @@ class ProfileController extends Controller
         $activeTab = $request->query('tab', 'sell');
         $keyword   = $request->query('keyword');
 
-        // ✅ 想定外のtabが来た場合は 'sell' に揃える
+        // 想定外のtabが来た場合は 'sell' に揃える
         if (!in_array($activeTab, ['sell', 'buy'], true)) {
             $activeTab = 'sell';
         }
@@ -126,5 +124,4 @@ class ProfileController extends Controller
             'keyword'
         ));
     }
-
 }
