@@ -9,21 +9,32 @@ use App\Models\Product;
 
 class T09_ProductShowCommentTest extends TestCase
 {
-
     use RefreshDatabase;
     protected $seed = true;
 
-    public function test_コメント機能の表示とバリデーション()
+    public function test_コメント送信機能()
     {
-        // 対象商品 (product_id=4)
-        $product = Product::find(4);
+        // 対象商品 (product_id=1)
+        $product = Product::find(1);
 
         // ----------------------------------------------------
-        // ログアウト状態 → コメント入力欄が非表示
+        // ログアウト状態 → コメント送信禁止を確認
         // ----------------------------------------------------
+        // ログアウト状態でコメント投稿を試みる
+        $response = $this->post(route('products.comments.store', $product->id), [
+            'comment' => 'ログアウト状態でのコメント',
+        ]);
+
+        // エラーメッセージを確認
+        $response->assertRedirect(); // 未ログインならリダイレクトが起きる
         $response = $this->get(route('products.show', $product->id));
-        $response->assertStatus(200);
+        $response->assertSeeText('コメント送信にはログインが必要です。');
 
+        // DBに登録されていないことを確認
+        $this->assertDatabaseMissing('comments', [
+            'product_id' => $product->id,
+            'comment' => 'ログアウト状態でのコメント',
+        ]);
 
         // ----------------------------------------------------
         // ログイン状態でコメント未入力 → バリデーション
@@ -71,8 +82,9 @@ class T09_ProductShowCommentTest extends TestCase
         $response = $this->get(route('products.show', $product->id));
         $response->assertStatus(200);
 
-        // コメント件数が3件に（Seederの2件＋今回の1件）
-        $response->assertSeeText('コメント(3)');
+        // コメント件数が1件に（Seederでは0件＋今回の1件）
+        $response->assertSeeText('1');          // アイコンの下の数字
+        $response->assertSeeText('コメント(1)');
         $response->assertSeeText('PHPUnitテスト');
         $response->assertSeeText('山田 三郎');
 
