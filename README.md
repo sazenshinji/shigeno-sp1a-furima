@@ -1,6 +1,6 @@
 ## アプリケーション名
 
-フリマアプリ
+coachtechフリマ
 
 ## 環境構築
 
@@ -225,7 +225,12 @@ mysql Ver 8.0.26 for Linux on x86_64 (MySQL Community Server - GPL)
 
 nginx version: nginx/1.21.1
 
+jquery：v3
+
 ## URL
+開発環境：http://localhost/
+
+phpMyAdmin：http://localhost:8080/
 
 商品一覧画面（トップ画面）：/
 

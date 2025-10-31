@@ -49,8 +49,20 @@ class TransactionController extends Controller
     // Stripe Checkoutにリダイレクト
     public function checkout(PurchaseRequest $request, Product $product)
     {
+        // 配送先チェック（profleもtemp_profileも存在しない）
+        $postal_code = $request->input('postal_code');
+        $address     = $request->input('address');
+
+        if (empty($postal_code) || empty($address)) {
+            // 配送先がない場合 → 何もせず購入画面に戻る
+            return redirect()
+                ->route('products.purchase', ['product' => $product->id])
+                ->with('no_address', '配送先の住所を入力してください');
+        }
+
         Stripe::setApiKey(env('STRIPE_SECRET'));
 
+        // （以下は元の処理をそのまま残す）
         $commonLineItem = [[
             'price_data' => [
                 'currency' => 'jpy',
@@ -60,16 +72,11 @@ class TransactionController extends Controller
             'quantity' => 1,
         ]];
 
-        $postal_code = $request->input('postal_code');
-        $address     = $request->input('address');
-        // 空欄なら null に変換
-        $building    = $request->filled('building') && $request->input('building') !== ''
+        $building = $request->filled('building') && $request->input('building') !== ''
             ? $request->input('building')
             : null;
 
-        // 支払い方法ごとの設定
         if ($request->payment_method == 1) {
-            // コンビニ払い（テスト用：即DB登録）
             $paymentType = ['konbini'];
             $method = 1;
 
@@ -80,20 +87,17 @@ class TransactionController extends Controller
                 'payment_method' => 1,
                 'postal_code'    => $postal_code,
                 'address'        => $address,
-                'building'       => $building, // ← 空欄時はNULL
+                'building'       => $building,
             ]);
 
-            // 一時住所セッションを削除（次回購入時にプロフィール住所を表示するため）
             session()->forget('temp_profile');
         } elseif ($request->payment_method == 2) {
-            // カード払い（決済完了後に登録する）
             $paymentType = ['card'];
             $method = 2;
         } else {
             return back()->withErrors(['payment_method' => '支払い方法を選択してください']);
         }
 
-        // Stripeセッション作成（カード・コンビニ共通）
         $session = StripeSession::create([
             'payment_method_types' => $paymentType,
             'line_items' => $commonLineItem,

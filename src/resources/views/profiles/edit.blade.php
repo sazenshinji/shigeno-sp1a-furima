@@ -35,7 +35,6 @@
     <div class="error-message">{{ $message }}</div>
     @enderror
 
-
     {{-- ユーザー名 --}}
     <div class="form-group">
       <label for="username">ユーザー名</label>

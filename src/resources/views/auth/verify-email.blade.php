@@ -19,7 +19,6 @@
     </a>
   </div>
 
-
   {{-- 確認メール再送フォーム --}}
   <form method="POST" action="{{ route('verification.send') }}">
     @csrf

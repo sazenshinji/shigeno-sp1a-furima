@@ -57,7 +57,7 @@
             <p>{{ $displayProfile['address'] ?? '' }}</p>
             <p>{{ $displayProfile['building'] ?? '' }}</p>
             @else
-            <p class="error-noaddress">住所の登録がありません。</p>
+            <p class="error-noaddress">配送先の住所を入力してください</p>
             @endif
         </div>
 
@@ -89,13 +89,25 @@
             <input type="hidden" name="postal_code" value="{{ $displayProfile['postal_code'] ?? '' }}">
             <input type="hidden" name="address" value="{{ $displayProfile['address'] ?? '' }}">
             <input type="hidden" name="building" value="{{ $displayProfile['building'] ?? '' }}">
-            <button type="submit" class="purchase-btn">購入する</button>
+
+            {{-- ★ 配送先が無ければボタン無効化 --}}
+            @php
+            $isDisabled = !$displayProfile; // 配送先が存在しない場合
+            @endphp
+
+            <button
+                type="submit"
+                class="purchase-btn"
+                @if($isDisabled) disabled style="background-color: #ccc; cursor: not-allowed;" @endif>
+                購入する
+            </button>
         </form>
 
         {{-- エラー --}}
         @error('payment_method')
         <div class="error">{{ $message }}</div>
         @enderror
+
     </div>
 </div>
 
