@@ -102,6 +102,7 @@ php artisan storage:link
 1.1 テスト用のデータベースの準備
 　・MySQL コンテナに入る。
 　　　 bash
+　　　 cd coachtech/shigeno-sp1a-furima/
 　　　 docker-compose exec mysql bash
 
 ・root ユーザ(管理者)でログイン。
@@ -120,11 +121,16 @@ php artisan storage:link
 　　　　'database' ：env('DB_DATABASE', 'forge') → 'demo_test'
 　　　　'username' ：env('DB_USERNAME', 'forge') → 'root'
 　　　　'password' ：env('DB_PASSWORD', '') → 'root'
+
 1.3 テスト用の.env ファイル作成
-　・PHP コンテナにログインし、.env をコピーして.env.testing というファイルを作成
+・PHP コンテナにログインし、.env をコピーして.env.testing というファイルを作成
 　　　 PHP コンテナ
 　　　 bash
 　　　 cp .env .env.testing
+
+・コピーしファイルの権限変更
+　　　 sudo chmod -R 777 *
+　　　 (パスワードを入力)
 
 ・.env.testing ファイルを以下の様に編集する
 　　　　「文頭部分の APP_ENV と APP_KEY」の変更
@@ -160,7 +166,7 @@ php artisan storage:link
 
 ・テスト用のテーブルの作成を行う
 　　　 bash
-　　　 php artisan migrate --env=testing
+　　　 php artisan migrate --seed --env=testing
 
 1.5 PHPUnit の設定ファイル「phpunit.xml」の編集
 　（★ 編集済のため作業不要です。）
