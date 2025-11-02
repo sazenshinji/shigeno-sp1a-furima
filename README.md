@@ -71,54 +71,96 @@ php artisan storage:link
 
 =================================================================================
 〇「Stripe」の導入について
+
 １．準備
+
 1.1 アカウントの準備と API キーの取得
+
 　・Stripe アカウントを準備してください。
+
 　・Stripe のダッシュボードで API キー（公開可能キー / 秘密キー）を取得してください。
+
 　　　公開キー: pk_test_xxxxx
+
 　　　秘密キー: sk_test_xxxxx
+
 1.2 Stripe のインストール と .env ファイルの編集
+
 　・Laravel に Stripe をインストールしてください。
+
 　　　 bash
+
 　　　 composer require stripe/stripe-php
 
+
 ・.env に 取得した API キーを追加します。
+
 　　　 STRIPE_KEY=pk_test_xxxxx
+
 　　　 STRIPE_SECRET=sk_test_xxxxx
 
+
 ２．Stripe 決済 カード支払時の入力情報 例
+
 　・メールアドレス：test@example.com
+
 　・カード情報：4242 4242 4242 4242 将来の日付 任意の 3 桁
+
 　・カード名義：Stripe Test
+
 
 ３．Stripe 決済 コンビニ払い時の入力情報 例
+
 　・メールアドレス：test@example.com
+
 　・カード名義：Stripe Test
+
 　・電話番号：(未入力)
 
+
 =================================================================================
+
 〇「PHPUnit による単体テスト」について
+
 １．準備
+
 1.1 テスト用のデータベースの準備
+
 　・MySQL コンテナに入る。
+
 　　　 bash
+
 　　　 cd coachtech/shigeno-sp1a-furima/
+
 　　　 docker-compose exec mysql bash
 
+
 ・root ユーザ(管理者)でログイン。
+
 　　　 bash
+
 　　　 mysql -u root -p
+
 　　　 root
 
+
 ・「demo_test」というデータベースを作成する。
+
 　　　 bash
+
 　　　 CREATE DATABASE fleama_test;
 
+
 1.2 src/config/database.php ファイルの変更
+
 　・mysql の配列部分をコピーし、新たに mysql_test 配列を作成し、
+
 　　配列の中の database、username、password を以下の様に変更する。
+
 　　　　(項目) ：(変更前) → (変更後)
+
 　　　　'database' ：env('DB_DATABASE', 'forge') → 'demo_test'
+
 　　　　'username' ：env('DB_USERNAME', 'forge') → 'root'
 　　　　'password' ：env('DB_PASSWORD', '') → 'root'
 
