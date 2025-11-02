@@ -70,6 +70,7 @@ php artisan storage:link
 ```
 
 =================================================================================
+
 〇「Stripe」の導入について
 
 １．準備
@@ -162,104 +163,202 @@ php artisan storage:link
 　　　　'database' ：env('DB_DATABASE', 'forge') → 'demo_test'
 
 　　　　'username' ：env('DB_USERNAME', 'forge') → 'root'
+
 　　　　'password' ：env('DB_PASSWORD', '') → 'root'
 
+
 1.3 テスト用の.env ファイル作成
+
 ・PHP コンテナにログインし、.env をコピーして.env.testing というファイルを作成
+
 　　　 PHP コンテナ
+
 　　　 bash
+
 　　　 cp .env .env.testing
 
+
 ・コピーしファイルの権限変更
+
 　　　 sudo chmod -R 777 *
+
 　　　 (パスワードを入力)
 
+
+
 ・.env.testing ファイルを以下の様に編集する
+
 　　　　「文頭部分の APP_ENV と APP_KEY」の変更
+
 　　　　　　　----------------------------------------------------------------
+
 　　　　　　　 APP_NAME=Laravel
+
 　　　　　　　- APP_ENV=local
+
 　　　　　　　- APP_KEY=base64:vPtYQu63T1fmcyeBgEPd0fJ+jvmnzjYMaUf7d5iuB+c=
+
 　　　　　　　+ APP_ENV=test
+
 　　　　　　　+ APP_KEY=
+
 　　　　　　　 APP_DEBUG=true
+
 　　　　　　　 APP_URL=http://localhost
+
 　　　　　　　----------------------------------------------------------------
+
 　　　　「データベースの接続情報」の変更
+
 　　　　　　　----------------------------------------------------------------
+
 　　　　　　　 DB_CONNECTION=mysql_test
+
 　　　　　　　 DB_HOST=mysql
+
 　　　　　　　 DB_PORT=3306
+
 　　　　　　　- DB_DATABASE=laravel_db
+
 　　　　　　　- DB_USERNAME=laravel_user
+
 　　　　　　　- DB_PASSWORD=laravel_pass
+
 　　　　　　　+ DB_DATABASE=demo_test
+
 　　　　　　　+ DB_USERNAME=root
+
 　　　　　　　+ DB_PASSWORD=root
+
 　　　　　　　----------------------------------------------------------------
+
 　・APP_KEY に新たなテスト用のアプリケーションキーを加える
+
 　　　 bash
+
 　　　 php artisan key:generate --env=testing
 
+
+
 1.4 キャッシュの削除とテスト用のテーブルの作成
+
 　・キャッシュの削除を行う
+
+
 　　　 bash
+
 　　　 php artisan config:clear
 
+
+
 ・テスト用のテーブルの作成を行う
+
 　　　 bash
+
 　　　 php artisan migrate --seed --env=testing
 
+
+
 1.5 PHPUnit の設定ファイル「phpunit.xml」の編集
+
 　（★ 編集済のため作業不要です。）
 
+
 ２．テストの実行
+
 　・すべてのテストを実行
+
 　　　 bash
+
 　　　 php artisan test
 
+
+
 ・特定のテストを実行
+
 　　　 bash
+
 　　　 php artisan test --filter=(Feature テストファイル名)
 
+
+
 =================================================================================
+
 〇「メールを用いた認証機能(MailHog)」について
+
 １．準備
+
 1.1 MailHog コンテナを Docker に追加
+
 　・docker-compose.yml に MailHog サービスを追加する。
+
 　　　　----------------------------------------
+
 version: '3.8'
+
 services:
+
+
 
         【中略】
 
+
+
           mailhog:
+
             image: mailhog/mailhog
+
             container_name: mailhog
+
             ports:
+
               - "1025:1025"   # SMTPポート
+
               - "8025:8025"   # Web UIポート
 
+
+
 ---
+
+
 
 1.2 .env ファイルの設定
+
 　・「MAIL_」部分を以下の様に編集します。
+
 　　　　----------------------------------------
 
+
+
         MAIL_MAILER=smtp
+
         MAIL_HOST=mailhog
+
         MAIL_PORT=1025
+
         MAIL_USERNAME=null
+
         MAIL_PASSWORD=null
+
         MAIL_ENCRYPTION=null
+
         MAIL_FROM_ADDRESS=example@example.com
+
         MAIL_FROM_NAME="${APP_NAME}"
+
+
 
 ---
 
+
+
 1.3 Docker コンテナを再起動
+
 　　　 bash
+
 　　　 docker-compose up -d --build
+
+
 
 =================================================================================
 
