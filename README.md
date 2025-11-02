@@ -151,21 +151,9 @@ php artisan storage:link
 
 　　　 CREATE DATABASE fleama_test;
 
-
 1.2 src/config/database.php ファイルの変更
 
-　・mysql の配列部分をコピーし、新たに mysql_test 配列を作成し、
-
-　　配列の中の database、username、password を以下の様に変更する。
-
-　　　　(項目) ：(変更前) → (変更後)
-
-　　　　'database' ：env('DB_DATABASE', 'forge') → 'demo_test'
-
-　　　　'username' ：env('DB_USERNAME', 'forge') → 'root'
-
-　　　　'password' ：env('DB_PASSWORD', '') → 'root'
-
+　（★ 編集済のため作業不要です。）
 
 1.3 テスト用の.env ファイル作成
 
@@ -212,7 +200,9 @@ php artisan storage:link
 
 　　　　　　　----------------------------------------------------------------
 
-　　　　　　　 DB_CONNECTION=mysql_test
+　　　　　　　- DB_CONNECTION=mysql
+
+　　　　　　　+ DB_CONNECTION=mysql_test
 
 　　　　　　　 DB_HOST=mysql
 
@@ -224,7 +214,7 @@ php artisan storage:link
 
 　　　　　　　- DB_PASSWORD=laravel_pass
 
-　　　　　　　+ DB_DATABASE=demo_test
+　　　　　　　+ DB_DATABASE=fleama_test
 
 　　　　　　　+ DB_USERNAME=root
 
