@@ -145,7 +145,7 @@ php artisan storage:link
 　　　 root
 
 
-・「demo_test」というデータベースを作成する。
+・「fleama_test」というデータベースを作成する。
 
 　　　 bash
 
